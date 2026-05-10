@@ -6,7 +6,7 @@
     <title>Silver Strings | Masterpieces of Karimnagar Filigree</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --charcoal: #0a0a0a;
@@ -15,6 +15,47 @@
             --bright-silver: #E8E8E8;
             --accent-gold: #B8860B;
             --text-light: #f5f5f5;
+        }
+
+        /* Video Background Styles */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -2;
+        }
+
+        .background-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            opacity: 0.6; /* Adjust this for transparency level */
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            transition: background-color 0.3s, color 0.3s, box-shadow 0.3s, transform 0.3s;
         }
 
         * {
@@ -26,12 +67,14 @@
         body {
             background-color: var(--charcoal);
             color: var(--text-light);
-            font-family: 'Inter', sans-serif;
+            font-family: 'Silkscreen', cursive;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
+
         h1, h2, h3, .brand-font {
-            font-family: 'Cinzel', serif;
+            font-family: 'Silkscreen', cursive;
         }
 
         .serif-font {
@@ -52,6 +95,7 @@
         }
 
         .logo {
+            font-family: 'Silkscreen', cursive;
             font-size: 1.2rem;
             font-weight: 700;
             letter-spacing: 3px;
@@ -67,6 +111,26 @@
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--bright-silver);
         }
 
         /* Hero - Simplified for Stability */
@@ -78,7 +142,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            background-color: black;
+            background-color: transparent;
             padding: 0 20px;
             overflow: hidden;
         }
@@ -89,10 +153,13 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/hero.jpg');
-            background-size: cover;
-            background-position: center;
+            background: transparent;
             z-index: 1;
+            transition: transform 0.5s ease;
+        }
+
+        .hero:hover .hero-image-bg {
+            transform: scale(1.05);
         }
 
         .hero-content {
@@ -129,12 +196,14 @@
         .cta-button:hover {
             background: var(--silver);
             color: black;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
 
         /* Heritage Section - Simplified */
         .heritage {
             padding: 80px 10%;
-            background-color: var(--deep-grey);
+            background-color: rgba(17, 17, 17, 0.8);
             display: block; /* Changed from grid to block for stability */
         }
 
@@ -170,12 +239,19 @@
             border: 1px solid var(--accent-gold);
             background: url('images/heritage.jpg') center/cover;
             box-shadow: 15px 15px 0 var(--accent-gold);
+            transition: transform 0.5s ease, box-shadow 0.3s ease;
+        }
+
+        .heritage-img-box:hover {
+            transform: scale(1.03);
+            box-shadow: 20px 20px 0 var(--accent-gold);
         }
 
         /* Gallery - Stable Product Cards */
         .gallery {
             padding: 80px 5%;
             text-align: center;
+            background-color: rgba(10, 10, 10, 0.7);
         }
 
         .gallery h2 {
@@ -198,6 +274,16 @@
             text-align: left;
             display: flex;
             flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+
+        .product-card:hover .product-img-box img {
+            transform: scale(1.05);
         }
 
         .product-img-box {
@@ -256,13 +342,21 @@
             font-size: 0.75rem;
             font-weight: 700;
             letter-spacing: 1px;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .order-btn:hover {
+            background: #d4a017; /* slightly darker gold */
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
 
         /* Bespoke */
         .bespoke {
             padding: 80px 10%;
             text-align: center;
-            background: linear-gradient(var(--deep-grey), var(--charcoal));
+            background: linear-gradient(rgba(17, 17, 17, 0.8), rgba(10, 10, 10, 0.7));
         }
 
         .bespoke-card {
@@ -280,9 +374,53 @@
             color: #555;
             font-size: 0.7rem;
         }
+
+        /* Fade-in on scroll */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom cursor */
+        .custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--accent-gold);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, border-color 0.3s, transform 0.3s;
+            z-index: 9999;
+            mix-blend-mode: difference;
+        }
+
+        .custom-cursor.active {
+            width: 40px;
+            height: 40px;
+            background: rgba(184, 134, 11, 0.2);
+            border-color: var(--accent-gold);
+            transform: translate(-50%, -50%) scale(0.5);
+        }
     </style>
 </head>
 <body>
+    <!-- Background Video -->
+    <div class="video-container">
+        <video autoplay muted loop playsinline class="background-video">
+            <source src="videos/artisans-work.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
 
     <nav>
         <a href="#" class="logo">Silver Strings</a>
@@ -294,7 +432,7 @@
         </div>
     </nav>
 
-    <section class="hero">
+    <section class="hero fade-in">
         <div class="hero-image-bg"></div>
         <div class="hero-content">
             <h1>The Art of Woven Silver</h1>
@@ -303,7 +441,7 @@
         </div>
     </section>
 
-    <section id="heritage" class="heritage">
+    <section id="heritage" class="heritage fade-in">
         <div class="heritage-content">
             <div class="heritage-text">
                 <h2>Tarkasi: A Legacy of Light</h2>
@@ -315,7 +453,7 @@
         </div>
     </section>
 
-    <section id="gallery" class="gallery">
+    <section id="gallery" class="gallery fade-in">
         <h2>Curated Masterpieces</h2>
         <div class="gallery-grid">
             <!-- Item 1 -->
@@ -366,7 +504,7 @@
         </div>
     </section>
 
-    <section id="bespoke" class="bespoke">
+    <section id="bespoke" class="bespoke fade-in">
         <div class="bespoke-card">
             <h2>Commission a Masterpiece</h2>
             <p class="serif-font">Your vision, our legacy. We specialize in creating one-of-a-kind silver heirlooms tailored to your requirements.</p>
@@ -377,6 +515,77 @@
     <footer>
         <p>&copy; 2026 Silver Strings. Handcrafted in Karimnagar, Telangana.</p>
     </footer>
+
+  <script>
+    // Fade-in on scroll
+    document.addEventListener('DOMContentLoaded', function() {
+      const fadeElements = document.querySelectorAll('.fade-in');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      fadeElements.forEach(el => {
+        observer.observe(el);
+      });
+    });
+
+    // Custom cursor
+    document.addEventListener('DOMContentLoaded', function() {
+      const cursor = document.createElement('div');
+      cursor.classList.add('custom-cursor');
+      document.body.appendChild(cursor);
+
+      // Elements that should trigger cursor change
+      const interactiveElements = document.querySelectorAll('a, button, .product-card, .cta-button, .order-btn, nav, .hero, .heritage-img-box, .heritage-content, .bespoke-card');
+
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.pageX + 'px';
+        cursor.style.top = e.pageY + 'px';
+      });
+
+      document.addEventListener('mouseenter', (e) => {
+        // Check if the target or any parent is in the interactiveElements list
+        let isInteractive = false;
+        let target = e.target;
+        while (target) {
+          if (interactiveElements && interactiveElements.length) {
+            interactiveElements.forEach(el => {
+              if (el === target || el.contains(target)) {
+                isInteractive = true;
+              }
+            });
+          }
+          if (isInteractive) break;
+          target = target.parentElement;
+        }
+        if (isInteractive) {
+          cursor.classList.add('active');
+        }
+      });
+
+      document.addEventListener('mouseleave', (e) => {
+        cursor.classList.remove('active');
+      });
+    });
+  </script>
+
+  <script>
+    // Video error handling
+    document.addEventListener('DOMContentLoaded', function() {
+      const video = document.querySelector('.background-video');
+      if (video) {
+        video.addEventListener('error', function() {
+          console.warn('Background video failed to load');
+          // Optionally show a fallback image or message
+          video.parentElement.classList.add('video-failed');
+        });
+      }
+    });
+  </script>
 
 </body>
 </html>
