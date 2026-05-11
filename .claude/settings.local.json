@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.lucien.com)",
+      "WebFetch(domain:silver-strings.vercel.app)"
+    ]
+  }
+}
