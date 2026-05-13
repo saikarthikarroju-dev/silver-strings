@@ -139,7 +139,7 @@
 
         .logo {
             font-family: 'Silkscreen', cursive;
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 2vw, 1.25rem);
             font-weight: 700;
             letter-spacing: 3px;
             color: var(--silver);
@@ -239,7 +239,7 @@
         .hero p {
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 2vw, 1.25rem);
             margin-bottom: 2.5rem;
             max-width: 700px;
             color: var(--silver);
@@ -655,7 +655,7 @@
         }
 
         .bespoke p {
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 2vw, 1.25rem);
             color: #ccc;
             line-height: 1.8;
             margin-bottom: 30px;
@@ -703,7 +703,7 @@
             justify-content: center;
             color: white;
             text-decoration: none;
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 2vw, 1.25rem);
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
@@ -813,13 +813,15 @@
            top: 0;
            right: -100%;
            flex-direction: column;
-           background-color: rgba(0,0,0,0.95);
-           width: 70%;
-           max-width: 300px;
+           background-color: rgba(0,0,0,0.98);
+           width: 100%;
            height: 100vh;
-           padding-top: 80px;
-           transition: right 0.3s ease;
+           padding-top: 100px;
+           transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
            z-index: 1000;
+           justify-content: center;
+           align-items: center;
+           backdrop-filter: blur(15px);
        }
 
        .nav-links.active {
@@ -828,15 +830,18 @@
 
        .nav-links a {
            display: block;
-           margin: 20px 0;
-           padding: 10px 20px;
-           font-size: 1.1rem;
+           margin: 15px 0;
+           padding: 15px 0;
+           font-size: 1.5rem;
            text-align: center;
-           border-bottom: 1px solid rgba(255,255,255,0.1);
+           border-bottom: none;
+           width: 100%;
+           transition: var(--transition-smooth);
        }
 
-       .nav-links a:last-child {
-           border-bottom: none;
+       .nav-links a:hover {
+           color: var(--accent-gold);
+           transform: scale(1.1);
        }
 
        /* Adjust hero section for mobile */
@@ -884,59 +889,45 @@
        }
 
        .gallery-grid {
-           grid-template-columns: 1fr;
-           gap: 25px;
+           display: grid;
+           grid-template-columns: repeat(2, 1fr);
+           gap: 15px;
        }
 
-       /* Adjust bespoke section */
-       .bespoke {
-           padding: 60px 5%;
+       .product-card {
+           min-width: 0;
        }
 
-       .bespoke-card {
-           padding: 30px;
-       }
-
-       .bespoke h2 {
-           font-size: 2rem;
-       }
-
-       .bespoke p {
-           font-size: 1rem;
-       }
-
-       /* Adjust footer */
-       footer {
-           padding: 20px 5%;
-       }
-
-       /* Adjust product cards */
        .product-img-box {
-           height: 250px;
+           height: 180px;
+       }
+
+       .product-info {
+           padding: 15px;
        }
 
        .product-info h3 {
-           font-size: 1.2rem;
+           font-size: 0.9rem;
+           margin-bottom: 10px;
        }
 
        .product-description {
-           font-size: 0.95rem;
+           font-size: 0.8rem;
+           margin-bottom: 15px;
+       }
+
+       .product-meta {
+           font-size: 0.8rem;
        }
 
        .price {
-           font-size: 1rem;
+           font-size: 0.9rem;
        }
 
-       /* Adjust CTA button */
-       .cta-button {
-           padding: 0.8rem 2rem;
-           font-size: 0.8rem;
-       }
-
-       /* Adjust order button */
        .order-btn {
-           padding: 12px;
-           font-size: 0.8rem;
+           padding: 8px;
+           font-size: 0.7rem;
+           letter-spacing: 1px;
        }
 
        /* Disable performance-heavy effects on mobile */
@@ -970,6 +961,8 @@
             <a href="https://wa.me/919391381188" target="_blank">Contact</a>
         </div>
         <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+            <span class="hamburger"></span>
+            <span class="hamburger"></span>
             <span class="hamburger"></span>
         </button>
     </nav>
@@ -1217,3 +1210,5 @@
    </script>
 </body>
 </html>
+
+
