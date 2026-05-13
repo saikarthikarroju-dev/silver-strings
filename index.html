@@ -764,6 +764,187 @@
          opacity: 0;
       }
    }
+
+   /* Mobile Navigation Styles */
+   .nav-toggle {
+       display: none;
+       flex-direction: column;
+       justify-content: space-between;
+       width: 25px;
+       height: 20px;
+       background: transparent;
+       border: none;
+       cursor: pointer;
+       padding: 0;
+       z-index: 1001;
+   }
+
+   .nav-toggle .hamburger {
+       width: 100%;
+       height: 3px;
+       background-color: var(--text-light);
+       border-radius: 3px;
+       transition: all 0.3s ease;
+   }
+
+   .nav-toggle.active .hamburger:nth-child(1) {
+       transform: translateY(8px) rotate(45deg);
+   }
+
+   .nav-toggle.active .hamburger:nth-child(2) {
+       opacity: 0;
+   }
+
+   .nav-toggle.active .hamburger:nth-child(3) {
+       transform: translateY(-8px) rotate(-45deg);
+   }
+
+   @media screen and (max-width: 768px) {
+       .nav-toggle {
+           display: flex;
+       }
+
+       .nav-links {
+           position: fixed;
+           top: 0;
+           right: -100%;
+           flex-direction: column;
+           background-color: rgba(0,0,0,0.95);
+           width: 70%;
+           max-width: 300px;
+           height: 100vh;
+           padding-top: 80px;
+           transition: right 0.3s ease;
+           z-index: 1000;
+       }
+
+       .nav-links.active {
+           right: 0;
+       }
+
+       .nav-links a {
+           display: block;
+           margin: 20px 0;
+           padding: 10px 20px;
+           font-size: 1.1rem;
+           text-align: center;
+           border-bottom: 1px solid rgba(255,255,255,0.1);
+       }
+
+       .nav-links a:last-child {
+           border-bottom: none;
+       }
+
+       /* Adjust hero section for mobile */
+       .hero {
+           height: 70vh;
+           padding: 0 10px;
+       }
+
+       .hero h1 {
+           font-size: clamp(2rem, 8vw, 3.5rem);
+       }
+
+       .hero p {
+           font-size: 1rem;
+           margin-bottom: 2rem;
+       }
+
+       /* Adjust heritage section */
+       .heritage {
+           padding: 60px 5%;
+       }
+
+       .heritage-content {
+           flex-direction: column;
+           gap: 40px;
+       }
+
+       .heritage-text {
+           min-width: auto;
+       }
+
+       .heritage-img-box {
+           min-width: auto;
+           height: 300px;
+       }
+
+       /* Adjust gallery section */
+       .gallery {
+           padding: 60px 5%;
+       }
+
+       .gallery h2 {
+           font-size: 2rem;
+           margin-bottom: 2rem;
+       }
+
+       .gallery-grid {
+           grid-template-columns: 1fr;
+           gap: 25px;
+       }
+
+       /* Adjust bespoke section */
+       .bespoke {
+           padding: 60px 5%;
+       }
+
+       .bespoke-card {
+           padding: 30px;
+       }
+
+       .bespoke h2 {
+           font-size: 2rem;
+       }
+
+       .bespoke p {
+           font-size: 1rem;
+       }
+
+       /* Adjust footer */
+       footer {
+           padding: 20px 5%;
+       }
+
+       /* Adjust product cards */
+       .product-img-box {
+           height: 250px;
+       }
+
+       .product-info h3 {
+           font-size: 1.2rem;
+       }
+
+       .product-description {
+           font-size: 0.95rem;
+       }
+
+       .price {
+           font-size: 1rem;
+       }
+
+       /* Adjust CTA button */
+       .cta-button {
+           padding: 0.8rem 2rem;
+           font-size: 0.8rem;
+       }
+
+       /* Adjust order button */
+       .order-btn {
+           padding: 12px;
+           font-size: 0.8rem;
+       }
+
+       /* Disable performance-heavy effects on mobile */
+       .water-ripple {
+           display: none !important;
+       }
+
+       /* Reduce video opacity for better performance on mobile */
+       .background-video {
+           opacity: 0.5 !important;
+       }
+   }
 </style>
 </head>
 <body>
@@ -778,12 +959,15 @@
 
     <nav>
         <a href="#" class="logo">Silver Strings</a>
-        <div class="nav-links">
+        <div class="nav-links" id="nav-links">
             <a href="#heritage">Heritage</a>
             <a href="#gallery">Gallery</a>
             <a href="#bespoke">Bespoke</a>
             <a href="https://wa.me/919391381188" target="_blank">Contact</a>
         </div>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+            <span class="hamburger"></span>
+        </button>
     </nav>
 
     <section class="hero fade-in">
@@ -926,8 +1110,13 @@
       });
     });
 
-    // Water ripple effect on mouse move
+    // Water ripple effect on mouse move (disabled on mobile for performance)
     document.addEventListener('DOMContentLoaded', function() {
+      // Skip water ripple effect on mobile devices
+      if (window.innerWidth <= 768) {
+        return;
+      }
+
       const container = document.createElement('div');
       container.style.position = 'fixed';
       container.style.top = 0;
@@ -999,6 +1188,27 @@
         ripple.addEventListener('animationend', function() {
            ripple.remove();
         });
+     });
+   </script>
+
+   <!-- Mobile Navigation Toggle -->
+   <script>
+     document.addEventListener('DOMContentLoaded', function() {
+       const navToggle = document.getElementById('nav-toggle');
+       const navLinks = document.getElementById('nav-links');
+
+       navToggle.addEventListener('click', function() {
+         navToggle.classList.toggle('active');
+         navLinks.classList.toggle('active');
+       });
+
+       // Close mobile menu when clicking a link
+       navLinks.querySelectorAll('a').forEach(link => {
+         link.addEventListener('click', function() {
+           navToggle.classList.remove('active');
+           navLinks.classList.remove('active');
+         });
+       });
      });
    </script>
 </body>
