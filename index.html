@@ -31,6 +31,9 @@
             --glass-bg: rgba(10, 10, 10, 0.75);
             --dark-gold: #B8860B;
             --light-gold: #F5DEB3;
+            --champagne: #F7E7CE;
+            --soft-cream: #F5F5DC;
+            --luxury-border: rgba(247, 231, 206, 0.3);
             --shadow-depth: 0 10px 30px rgba(0,0,0,0.5);
             --shadow-lg: 0 20px 40px rgba(0,0,0,0.6);
             --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -290,8 +293,361 @@
             transition: all 0.6s;
         }
 
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255,255,255,0.2),
+                transparent
+            );
+            transition: all 0.6s;
+        }
+
         .cta-button:hover::before {
             left: 100%;
+        }
+
+        /* Trust Signals */
+        .trust-signals {
+            padding: 80px 10%;
+            text-align: center;
+            background: var(--deep-grey);
+            position: relative;
+        }
+        .seal-container {
+            border: 1px solid var(--luxury-border);
+            padding: 50px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            background: rgba(247, 231, 206, 0.03);
+            backdrop-filter: blur(5px);
+            border-radius: 2px;
+        }
+        .seal-icon {
+            font-size: 2rem;
+            color: var(--accent-gold);
+            display: block;
+            margin-bottom: 20px;
+        }
+        .seal-content h3 {
+            font-size: 2rem;
+            color: var(--bright-silver);
+            margin-bottom: 1.5rem;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .seal-content p {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #aaa;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            line-height: 1.8;
+        }
+        .seal-badge {
+            margin-top: 20px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-gold);
+            border: 1px solid var(--accent-gold);
+            display: inline-block;
+            padding: 8px 20px;
+            transition: var(--transition-fast);
+        }
+        .seal-badge:hover {
+            background: var(--accent-gold);
+            color: white;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 10%;
+            text-align: center;
+            background: var(--charcoal);
+        }
+        .testimonials h2 {
+            font-size: 2.5rem;
+            color: var(--bright-silver);
+            margin-bottom: 3rem;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .testimonial-card {
+            padding: 30px;
+            border-left: 3px solid var(--champagne);
+            background: rgba(255,255,255,0.03);
+            text-align: left;
+            transition: var(--transition-smooth);
+        }
+        .testimonial-card:hover {
+            background: rgba(255,255,255,0.05);
+            transform: translateY(-5px);
+        }
+        .quote {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--silver);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        .patron-name {
+            display: block;
+            margin-top: 15px;
+            color: var(--champagne);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Care Guide */
+        .care-guide {
+            padding: 100px 10%;
+            background: var(--deep-grey);
+            text-align: center;
+        }
+        .care-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .care-guide h2 {
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 2rem;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .care-guide p.serif-font {
+            color: #aaa;
+            margin-bottom: 40px;
+            font-size: 1.2rem;
+        }
+        .care-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            text-align: left;
+        }
+        .care-item {
+            padding: 30px;
+            border: 1px solid var(--luxury-border);
+            background: rgba(255,255,255,0.02);
+            transition: var(--transition-smooth);
+        }
+        .care-item:hover {
+            border-color: var(--accent-gold);
+        }
+        .care-item h4 {
+            color: var(--champagne);
+            margin-bottom: 15px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+        }
+        .care-item p {
+            color: #888;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Policies */
+        .policies {
+            padding: 60px 10%;
+            background: #000;
+            border-top: 1px solid var(--luxury-border);
+            text-align: center;
+        }
+        .policy-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .policy-block {
+            flex: 1;
+            text-align: center;
+        }
+        .policy-block h3 {
+            font-size: 1.1rem;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .policy-block p {
+            font-size: 0.85rem;
+            color: #888;
+            line-height: 1.6;
+        }
+
+        /* SLIDER STYLES */
+        .mobile-slider {
+            display: none; /* Hidden by default (desktop) */
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 20px;
+            padding-bottom: 20px;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE 10+ */
+        }
+        .mobile-slider::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        .slider-item {
+            flex: 0 0 85%;
+            scroll-snap-align: center;
+        }
+
+        /* Mobile adjustments for new sections */
+        @media screen and (max-width: 768px) {
+            .nav-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                flex-direction: column;
+                background-color: rgba(0,0,0,0.98);
+                width: 100%;
+                height: 100vh;
+                padding-top: 100px;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 1000;
+                justify-content: center;
+                align-items: center;
+                backdrop-filter: blur(15px);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                display: block;
+                margin: 15px 0;
+                padding: 15px 0;
+                font-size: 1.5rem;
+                text-align: center;
+                border-bottom: none;
+                width: 100%;
+                transition: var(--transition-smooth);
+            }
+
+            .nav-links a:hover {
+                color: var(--accent-gold);
+                transform: scale(1.1);
+            }
+
+            .hero {
+                height: 70vh;
+                padding: 0 10px;
+            }
+
+            .hero h1 {
+                font-size: clamp(2rem, 8vw, 3.5rem);
+            }
+
+            .hero p {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .heritage {
+                padding: 60px 5%;
+            }
+
+            .heritage-content {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .heritage-text {
+                min-width: auto;
+            }
+
+            .heritage-img-box {
+                min-width: auto;
+                height: 300px;
+            }
+
+            .gallery {
+                padding: 60px 5%;
+            }
+
+            .gallery h2 {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .product-card {
+                min-width: 0;
+            }
+
+            .product-img-box {
+                height: 180px;
+            }
+
+            .product-info {
+                padding: 15px;
+            }
+
+            .product-info h3 {
+                font-size: 0.9rem;
+                margin-bottom: 10px;
+            }
+
+            .product-description {
+                font-size: 0.8rem;
+                margin-bottom: 15px;
+            }
+
+            .product-meta {
+                font-size: 0.8rem;
+            }
+
+            .price {
+                font-size: 0.9rem;
+            }
+
+            .order-btn {
+                padding: 8px;
+                font-size: 0.7rem;
+                letter-spacing: 1px;
+            }
+
+            /* Switch Grids to Sliders on Mobile */
+            .testimonial-grid, .care-grid, .policy-wrapper {
+                display: none; /* Hide desktop grids */
+            }
+            .mobile-slider {
+                display: flex; /* Show sliders */
+            }
+
+            .water-ripple {
+                display: none !important;
+            }
+
+            .background-video {
+                opacity: 0.5 !important;
+            }
         }
 
         /* Heritage Section - Premium Heritage */
@@ -975,6 +1331,17 @@
         </div>
     </section>
 
+    <section class="trust-signals fade-in">
+        <div class="seal-container">
+            <div class="seal-content">
+                <span class="seal-icon">✧</span>
+                <h3>Geographical Indication Certified</h3>
+                <p class="serif-font">An officially recognized legacy of Karimnagar. Every piece carries the seal of authenticity, ensuring the purity of silver and the integrity of traditional Tarkasi craftsmanship.</p>
+                <div class="seal-badge">Certified Heritage Craft</div>
+            </div>
+        </div>
+    </section>
+
     <section id="heritage" class="heritage fade-in">
         <div class="heritage-content">
             <div class="heritage-text">
@@ -997,7 +1364,7 @@
                 </div>
                 <div class="product-info">
                     <h3>Intricate Floral Pendant</h3>
-                    <p class="product-description">Pure silver filigree hand-woven with a signature deep blue tassel.</p>
+                    <p class="product-description">A delicate dance of silver threads and midnight blue, evoking the timeless grace of nature's bloom. An heirloom for the modern muse.</p>
                     <div class="product-meta">
                         <span class="price">₹4,500</span>
                         <span class="weight">Weight: 12g</span>
@@ -1012,7 +1379,7 @@
                 </div>
                 <div class="product-info">
                     <h3>Sovereign Showpiece</h3>
-                    <p class="product-description">A hand-woven silver candle holder reflecting the royal Tarkasi patterns.</p>
+                    <p class="product-description">A beacon of nobility. This hand-woven masterpiece captures the architectural grandeur of the Nizam's courts, casting a royal glow upon any space.</p>
                     <div class="product-meta">
                         <span class="price">₹12,000</span>
                         <span class="weight">Weight: 85g</span>
@@ -1027,7 +1394,7 @@
                 </div>
                 <div class="product-info">
                     <h3>Filigree Tabletop Art</h3>
-                    <p class="product-description">Precision-crafted silver anchor motif. An elegant statement piece.</p>
+                    <p class="product-description">A study in precision and poise. This anchor motif symbolizes strength anchored in elegance, weaving a story of nautical heritage in pure silver.</p>
                     <div class="product-meta">
                         <span class="price">₹3,200</span>
                         <span class="weight">Weight: 15g</span>
@@ -1038,11 +1405,93 @@
         </div>
     </section>
 
+    <section id="testimonials" class="testimonials fade-in">
+        <h2>Patrons' Praise</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <p class="quote">"An exquisite blend of history and art. The craftsmanship is unlike anything I've seen in contemporary jewelry."</p>
+                <span class="patron-name">— Elena R., Art Collector</span>
+            </div>
+            <div class="testimonial-card">
+                <p class="quote">"The detail in the filigree is breathtaking. It's not just a piece of jewelry; it's a conversation starter."</p>
+                <span class="patron-name">— Julian M., Design Curator</span>
+            </div>
+            <div class="testimonial-card">
+                <p class="quote">"Authentic, royal, and timeless. The delivery was as premium as the product itself."</p>
+                <span class="patron-name">— Sarah K., Heritage Enthusiast</span>
+            </div>
+        </div>
+        <div class="mobile-slider">
+            <div class="slider-item testimonial-card">
+                <p class="quote">"An exquisite blend of history and art. The craftsmanship is unlike anything I've seen in contemporary jewelry."</p>
+                <span class="patron-name">— Elena R., Art Collector</span>
+            </div>
+            <div class="slider-item testimonial-card">
+                <p class="quote">"The detail in the filigree is breathtaking. It's not just a piece of jewelry; it's a conversation starter."</p>
+                <span class="patron-name">— Julian M., Design Curator</span>
+            </div>
+            <div class="slider-item testimonial-card">
+                <p class="quote">"Authentic, royal, and timeless. The delivery was as premium as the product itself."</p>
+                <span class="patron-name">— Sarah K., Heritage Enthusiast</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="care-guide" class="care-guide fade-in">
+        <div class="care-container">
+            <h2>Everlasting Lustre</h2>
+            <p class="serif-font">Preserving a legacy requires a gentle touch. To ensure your masterpiece remains an heirloom for generations:</p>
+            <div class="care-grid">
+                <div class="care-item">
+                    <h4>The Ritual of Cleaning</h4>
+                    <p>Use only a soft, lint-free cloth to gently buff the silver, avoiding abrasive chemicals that could damage the intricate weave.</p>
+                </div>
+                <div class="care-item">
+                    <h4>Safe Sanctuary</h4>
+                    <p>Store your piece in the provided airtight velvet pouch to shield it from oxidation and keep the silver brilliant.</p>
+                </div>
+            </div>
+            <div class="mobile-slider">
+                <div class="slider-item care-item">
+                    <h4>The Ritual of Cleaning</h4>
+                    <p>Use only a soft, lint-free cloth to gently buff the silver, avoiding abrasive chemicals that could damage the intricate weave.</p>
+                </div>
+                <div class="slider-item care-item">
+                    <h4>Safe Sanctuary</h4>
+                    <p>Store your piece in the provided airtight velvet pouch to shield it from oxidation and keep the silver brilliant.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="bespoke" class="bespoke fade-in">
         <div class="bespoke-card">
             <h2>Commission a Masterpiece</h2>
             <p class="serif-font">Your vision, our legacy. We specialize in creating one-of-a-kind silver heirlooms tailored to your requirements.</p>
             <a href="https://wa.me/919391381188?text=Hello! I would like to discuss a custom bespoke silver design." target="_blank" class="cta-button" style="background: var(--accent-gold); color: white; border: none; margin-top: 20px; display: inline-block;">Start Your Design</a>
+        </div>
+    </section>
+
+    <section class="policies fade-in">
+        <div class="policy-wrapper">
+            <div class="policy-block">
+                <h3>White-Glove Shipping</h3>
+                <p>Each masterpiece is insured and shipped in signature luxury packaging to ensure a flawless arrival.</p>
+            </div>
+            <div class="policy-block">
+                <h3>Curation Returns</h3>
+                <p>Due to the bespoke nature of filigree, returns are accepted within 7 days for unused pieces in original packaging.</p>
+            </div>
+        </div>
+        <div class="mobile-slider">
+            <div class="slider-item policy-block">
+                <h3>White-Glove Shipping</h3>
+                <p>Each masterpiece is insured and shipped in signature luxury packaging to ensure a flawless arrival.</p>
+            </div>
+            <div class="slider-item policy-block">
+                <h3>Curation Returns</h3>
+                <p>Due to the bespoke nature of filigree, returns are accepted within 7 days for unused pieces in original packaging.</p>
+            </div>
         </div>
     </section>
 
