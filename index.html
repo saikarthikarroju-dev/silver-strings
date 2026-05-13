@@ -1270,6 +1270,36 @@
        .product-description {
            font-size: 0.8rem;
            margin-bottom: 15px;
+           display: -webkit-box;
+           -webkit-line-clamp: 3;
+           -webkit-box-orient: vertical;
+           overflow: hidden;
+           transition: max-height 0.4s ease;
+       }
+
+       .product-description.expanded {
+           display: block;
+           -webkit-line-clamp: unset;
+       }
+
+       .read-more-btn {
+           background: none;
+           border: none;
+           color: var(--accent-gold);
+           font-family: 'Cormorant Garamond', serif;
+           font-size: 0.75rem;
+           cursor: pointer;
+           padding: 0;
+           margin-bottom: 15px;
+           text-transform: uppercase;
+           letter-spacing: 1px;
+           font-weight: 600;
+           display: block;
+           transition: var(--transition-smooth);
+       }
+
+       .read-more-btn:hover {
+           color: var(--bright-silver);
        }
 
        .product-meta {
