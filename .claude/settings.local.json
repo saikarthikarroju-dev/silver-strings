@@ -2,7 +2,17 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:www.lucien.com)",
-      "WebFetch(domain:silver-strings.vercel.app)"
+      "WebFetch(domain:silver-strings.vercel.app)",
+      "Bash(curl -sL -A \"Mozilla/5.0 \\(Windows NT 10.0; Win64; x64\\) AppleWebKit/537.36\" \"https://www.goodreturns.in/silver-rates/\")",
+      "Bash(grep -oE \"\\(₹|Rs\\\\.?\\)[^<]{0,40}\\(gram|gm|/g|10g|100g|1g\\)\")",
+      "Bash(grep -oE \"\\(₹|Rs\\\\.?\\)[^<]{0,80}\")",
+      "Read(//tmp/**)",
+      "Bash(curl -sL -A \"Mozilla/5.0\" \"https://www.goodreturns.in/silver-rates/hyderabad.html\")",
+      "Bash(grep -oE \"per gram.{0,200}\")",
+      "Bash(grep -oE \"price of silver.{0,300}\")",
+      "Bash(grep -oE \"price of silver in Hyderabad today is.{0,120}\" /tmp/hyd.html)",
+      "Bash(node -e ' *)",
+      "Bash(node *)"
     ]
   }
 }

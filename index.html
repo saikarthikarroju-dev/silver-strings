@@ -1580,16 +1580,19 @@
     });
 
     // Live Silver Price Updater
-    // Fetches the spot silver price (USD/oz) and the USD->INR FX rate, converts to INR/gram.
-    // 1 troy ounce = 31.1035 grams. Falls back to a cached/localStorage value on any failure.
+    // Hits our own same-origin /api/silver-rate endpoint, which runs server-side
+    // on Vercel and scrapes goodreturns.in for the actual Hyderabad retail rate
+    // (not the international spot — that's much lower than what Indian buyers pay).
+    // Falls back to localStorage cache, then to a hardcoded last-known value.
     class SilverPriceUpdater {
       constructor() {
         // Realistic last-known-good fallback for Indian silver (INR per gram, 999 fineness).
-        // Used only if every live source and cache is unavailable.
-        this.silverPricePerGram = 95;
+        // Used only if every live source and cache are unavailable.
+        this.silverPricePerGram = 200;
         this.updateInterval = 5 * 60 * 1000; // 5 minutes
         this.cacheKey = 'silverPriceINRPerGram';
         this.cacheMaxAgeMs = 6 * 60 * 60 * 1000; // 6 hours
+        this.endpoint = '/api/silver-rate';
 
         this.loadFromCache();
         this.initializeProductPrices();
@@ -1625,84 +1628,25 @@
       }
 
       async fetchSilverPrice() {
-        // Try a list of sources in order. Stop at the first that returns a number.
-        const sources = [
-          () => this.fetchFromYahoo(),
-          () => this.fetchFromGoldapiFallback()
-        ];
-
-        for (const source of sources) {
-          try {
-            const pricePerGramINR = await source();
-            if (typeof pricePerGramINR === 'number' && isFinite(pricePerGramINR) && pricePerGramINR > 0) {
-              this.silverPricePerGram = pricePerGramINR;
-              this.saveToCache();
-              this.updateAllProductPrices();
-              this.updateTicker(false);
-              console.log(`Silver price updated: ₹${pricePerGramINR.toFixed(2)}/g`);
-              return;
-            }
-          } catch (err) {
-            console.warn('Silver price source failed:', err);
-          }
-        }
-
-        // All sources failed — keep existing value, mark banner as error if no cache at all
-        this.updateTicker(true);
-      }
-
-      // Source 1: Yahoo Finance via a public CORS proxy.
-      // SI=F is the COMEX silver futures USD/oz contract.
-      async fetchFromYahoo() {
-        const proxy = 'https://corsproxy.io/?';
-        const yahooURL = 'https://query1.finance.yahoo.com/v8/finance/chart/SI=F?interval=1d&range=2d';
-        const fxURL = 'https://query1.finance.yahoo.com/v8/finance/chart/USDINR=X?interval=1d&range=1d';
-
-        const [silverRes, fxRes] = await Promise.all([
-          fetch(proxy + encodeURIComponent(yahooURL)),
-          fetch(proxy + encodeURIComponent(fxURL))
-        ]);
-        if (!silverRes.ok || !fxRes.ok) {
-          throw new Error('Yahoo fetch failed');
-        }
-        const silverData = await silverRes.json();
-        const fxData = await fxRes.json();
-
-        const usdPerOunce = this.extractYahooPrice(silverData);
-        const usdToInr = this.extractYahooPrice(fxData);
-        if (!usdPerOunce || !usdToInr) {
-          throw new Error('Yahoo parse failed');
-        }
-        return (usdPerOunce * usdToInr) / 31.1035;
-      }
-
-      extractYahooPrice(payload) {
         try {
-          const result = payload?.chart?.result?.[0];
-          const meta = result?.meta;
-          if (!meta) return null;
-          // Prefer regularMarketPrice, fall back to previousClose
-          const price = meta.regularMarketPrice ?? meta.previousClose ?? meta.chartPreviousClose;
-          return typeof price === 'number' ? price : null;
-        } catch (e) {
-          return null;
+          const res = await fetch(this.endpoint, { method: 'GET', headers: { 'Accept': 'application/json' } });
+          if (!res.ok) throw new Error(`API responded ${res.status}`);
+          const data = await res.json();
+          const price = Number(data && data.price);
+          if (!isFinite(price) || price <= 0) {
+            throw new Error('API returned invalid price');
+          }
+          this.silverPricePerGram = price;
+          this.saveToCache();
+          this.updateAllProductPrices();
+          this.updateTicker(false, data.asOf);
+          console.log(`Silver price updated: ₹${price}/g (as of ${data.asOf || 'now'})`);
+        } catch (err) {
+          console.warn('Could not fetch live silver price, using cached value:', err);
+          // Keep the existing value (from cache or fallback). Mark as error if we
+          // never had a real value at all.
+          this.updateTicker(this.silverPricePerGram === 200 /* still default */, null);
         }
-      }
-
-      // Source 2: minimal no-frills fallback — Frankfurter (no key) for FX, and a
-      // hardcoded recent USD/oz silver spot as a last-ditch value.
-      // If even Frankfurter fails, we throw and the outer loop keeps the cached price.
-      async fetchFromGoldapiFallback() {
-        // Frankfurter is a free, no-key, CORS-friendly FX API
-        const fxRes = await fetch('https://api.frankfurter.app/latest?from=USD&to=INR');
-        if (!fxRes.ok) throw new Error('FX fetch failed');
-        const fxData = await fxRes.json();
-        const usdToInr = fxData?.rates?.INR;
-        if (!usdToInr) throw new Error('FX parse failed');
-
-        // Without a working silver feed, we cannot compute a fresh price.
-        // Throw so the outer caller keeps the cached/fallback value.
-        throw new Error('No public CORS-friendly silver spot endpoint; using cached price.');
       }
 
       initializeProductPrices() {
@@ -1742,7 +1686,7 @@
         }
       }
 
-      updateTicker(isError = false) {
+      updateTicker(isError = false, asOf = null) {
         const banner = document.getElementById('price-banner');
         const tickerElement = document.getElementById('silver-price-ticker');
         const refreshElement = document.getElementById('price-refresh');
@@ -1754,10 +1698,25 @@
         banner.classList.toggle('error', !!isError);
 
         if (refreshElement) {
-          const now = new Date();
-          const hh = String(now.getHours()).padStart(2, '0');
-          const mm = String(now.getMinutes()).padStart(2, '0');
-          refreshElement.textContent = `(updated ${hh}:${mm})`;
+          let label;
+          if (asOf) {
+            // Format the API-provided ISO timestamp as HH:MM (local time)
+            try {
+              const d = new Date(asOf);
+              if (!isNaN(d.getTime())) {
+                const hh = String(d.getHours()).padStart(2, '0');
+                const mm = String(d.getMinutes()).padStart(2, '0');
+                label = `(as of ${hh}:${mm})`;
+              }
+            } catch (_) { /* fall through */ }
+          }
+          if (!label) {
+            const now = new Date();
+            const hh = String(now.getHours()).padStart(2, '0');
+            const mm = String(now.getMinutes()).padStart(2, '0');
+            label = `(updated ${hh}:${mm})`;
+          }
+          refreshElement.textContent = label;
         }
       }
     }
