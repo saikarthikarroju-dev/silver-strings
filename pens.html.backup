@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silver Photo Frames | Silver Strings</title>
-    <meta name="description" content="Handcrafted silver photo frames - Masterpieces of Karimnagar Filigree.">
+    <title>Silver Pens | Silver Strings</title>
+    <meta name="description" content="Exquisite handcrafted silver pens - Masterpieces of Karimnagar Filigree.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Inter:wght@200;300;400;500;600&family=Silkscreen:wght@400;700&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -236,7 +236,7 @@
 
         .cta-button {
             padding: 1rem 2.5rem;
-            border: 1px solid var(--silber);
+            border: 1px solid var(--silver);
             color: var(--silver);
             text-decoration: none;
             text-transform: uppercase;
@@ -337,11 +337,6 @@
             border-color: rgba(212, 175, 55, 0.3);
         }
 
-        .product-card:hover .product-img-box img {
-            transform: scale(1.04);
-            filter: brightness(1.05) contrast(1.02);
-        }
-
         .product-img-box {
             width: 100%;
             height: 350px;
@@ -422,26 +417,6 @@
             color: #111;
             transform: translateY(-4px);
             box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
-        }
-
-        .order-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255,255,255,0.3),
-                transparent
-            );
-            transition: all 0.5s;
-        }
-
-        .order-btn:hover::before {
-            left: 100%;
         }
 
         footer {
@@ -527,11 +502,6 @@
                 transition: var(--transition-smooth);
             }
 
-            .nav-links a:hover {
-                color: var(--accent-gold);
-                transform: scale(1.1);
-            }
-
             .hero {
                 height: 70vh;
                 padding: 0 10px;
@@ -540,42 +510,6 @@
             .gallery-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
-            }
-
-            .product-card {
-                min-width: 0;
-            }
-
-            .product-img-box {
-                height: 180px;
-            }
-
-            .product-info {
-                padding: 15px;
-            }
-
-            .product-info h3 {
-                font-size: 0.9rem;
-                margin-bottom: 10px;
-            }
-
-            .product-description {
-                font-size: 0.8rem;
-                margin-bottom: 15px;
-            }
-
-            .product-meta {
-                font-size: 0.8rem;
-            }
-
-            .price {
-                font-size: 0.9rem;
-            }
-
-            .order-btn {
-                padding: 8px;
-                font-size: 0.7rem;
-                letter-spacing: 1px;
             }
         }
 
@@ -588,67 +522,6 @@
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
-        }
-
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: rgba(212, 175, 55, 0.8);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            font-size: clamp(1rem, 2vw, 1.25rem);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 999;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .back-to-top:hover {
-            background: rgba(212, 175, 55, 0.9);
-            transform: scale(1.1);
-        }
-
-        /* Silver Price Ticker */
-        .ticker {
-            width: 100%;
-            overflow: hidden;
-            background: rgba(0,0,0,0.7);
-            color: var(--accent-gold);
-            padding: 10px 0;
-            position: relative;
-            z-index: 998;
-            font-family: 'Silkscreen', cursive;
-            font-size: clamp(0.8rem, 1.5vw, 1rem);
-            letter-spacing: 1px;
-        }
-
-        .ticker-track {
-            display: inline-block;
-            white-space: nowrap;
-            animation: tickerScroll 20s linear infinite;
-        }
-
-        .ticker-text {
-            display: inline-block;
-            padding-left: 100%;
-        }
-
-        @keyframes tickerScroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
         }
     </style>
 </head>
@@ -677,68 +550,61 @@
         </button>
     </nav>
 
-    <!-- Silver Price Ticker -->
-    <div class="ticker">
-        <div class="ticker-track">
-            <span class="ticker-text" id="silver-price-ticker">Current Silver Price: ₹75.00/g</span>
-        </div>
-    </div>
-
     <section class="hero fade-in">
         <div class="hero-image-bg"></div>
         <div class="hero-content">
-            <h1>Silver Photo Frames</h1>
-            <p class="serif-font">Preserving memories in pure silver. Handcrafted frames that blend heritage artistry with timeless elegance.</p>
+            <h1>Silver Pens</h1>
+            <p class="serif-font">Instruments of Elegance. Each pen is a masterpiece of Tarkasi art, blending utility with an heirloom's prestige.</p>
             <a href="#gallery" class="cta-button">Explore the Collection</a>
         </div>
     </section>
 
     <section id="gallery" class="gallery fade-in">
-        <h2>Curated Frame Collection</h2>
+        <h2>Curated Pen Collection</h2>
         <div class="gallery-grid">
             <!-- Product 1 -->
-            <div class="product-card" data-weight="120" data-making-charge="6000">
+            <div class="product-card">
                 <div class="product-img-box">
-                    <img src="images/frame1.jpg" alt="Silver Filigree Frame">
+                    <img src="images/pen1.jpg" alt="Silver Filigree Pen">
                 </div>
                 <div class="product-info">
-                    <h3>Imperial Filigree Frame</h3>
-                    <p class="product-description">A majestic frame adorned with intricate silver weaves, perfect for capturing the most cherished moments of a lifetime.</p>
+                    <h3>Regal Filigree Pen</h3>
+                    <p class="product-description">A seamless blend of silver craftsmanship and writing precision. Featuring intricate floral filigree along the barrel.</p>
                     <div class="product-meta">
-                        <span class="price" data-base-price="15000">₹15,000</span>
-                        <span class="weight" data-weight="120">Weight: 120g</span>
+                        <span class="price">₹8,500</span>
+                        <span class="weight">Weight: 45g</span>
                     </div>
-                    <a href="https://wa.me/919391381188?text=Hello! I would like to order the Imperial Filigree Frame (₹15,000)" target="_blank" class="order-btn">Order via WhatsApp</a>
+                    <a href="https://wa.me/919391381188?text=Hello! I would like to order the Regal Filigree Pen (₹8,500)" target="_blank" class="order-btn">Order via WhatsApp</a>
                 </div>
             </div>
             <!-- Product 2 -->
-            <div class="product-card" data-weight="80" data-making-charge="3500">
+            <div class="product-card">
                 <div class="product-img-box">
-                    <img src="images/frame2.jpg" alt="Silver Filigree Frame">
+                    <img src="images/pen2.jpg" alt="Silver Filigree Pen">
                 </div>
                 <div class="product-info">
-                    <h3>Classic Tarkasi Frame</h3>
-                    <p class="product-description">Timeless elegance in every curve. This frame showcases the purity of silver filigree in a sophisticated, minimalist design.</p>
+                    <h3>Imperial Silver Pen</h3>
+                    <p class="product-description">Sleek, sophisticated, and timeless. This pen showcases the peak of Karimnagar's silver weaving technique.</p>
                     <div class="product-meta">
-                        <span class="price" data-base-price="9500">₹9,500</span>
-                        <span class="weight" data-weight="80">Weight: 80g</span>
+                        <span class="price">₹12,000</span>
+                        <span class="weight">Weight: 60g</span>
                     </div>
-                    <a href="https://wa.me/919391381188?text=Hello! I would like to order the Classic Tarkasi Frame (₹9,500)" target="_blank" class="order-btn">Order via WhatsApp</a>
+                    <a href="https://wa.me/919391381188?text=Hello! I would like to order the Imperial Silver Pen (₹12,000)" target="_blank" class="order-btn">Order via WhatsApp</a>
                 </div>
             </div>
             <!-- Product 3 -->
-            <div class="product-card" data-weight="200" data-making-charge="7000">
+            <div class="product-card">
                 <div class="product-img-box">
-                    <img src="images/frame3.jpg" alt="Silver Filigree Frame">
+                    <img src="images/pen3.jpg" alt="Silver Filigree Pen">
                 </div>
                 <div class="product-info">
-                    <h3>Royal Heritage Frame</h3>
-                    <p class="product-description">A tribute to royal courts. This heavily detailed frame brings an aura of nobility to any photograph it holds.</p>
+                    <h3>Artisan's Signature Pen</h3>
+                    <p class="product-description">A tribute to the masters of Tarkasi. Featuring a uniquely woven cap and polished silver body.</p>
                     <div class="product-meta">
-                        <span class="price" data-base-price="22000">₹22,000</span>
-                        <span class="weight" data-weight="200">Weight: 200g</span>
+                        <span class="price">₹6,200</span>
+                        <span class="weight">Weight: 38g</span>
                     </div>
-                    <a href="https://wa.me/919391381188?text=Hello! I would like to order the Royal Heritage Frame (₹22,000)" target="_blank" class="order-btn">Order via WhatsApp</a>
+                    <a href="https://wa.me/919391381188?text=Hello! I would like to order the Artisan's Signature Pen (₹6,200)" target="_blank" class="order-btn">Order via WhatsApp</a>
                 </div>
             </div>
         </div>
@@ -788,143 +654,6 @@
                 link.addEventListener('click', function() {
                     navToggle.classList.remove('active');
                     navLinks.classList.remove('active');
-                });
-            });
-        });
-
-        // Silver Price Updater Class - Same as in other files
-        class SilverPriceUpdater {
-            constructor() {
-                this.silverPricePerGram = 75; // Default fallback price (₹/g)
-                this.lastUpdateTime = 0;
-                this.updateInterval = 300000; // 5 minutes
-
-                // Initialize ticker with default price
-                this.updateTicker();
-
-                // Initial price update
-                this.fetchSilverPrice();
-
-                // Set up periodic updates
-                setInterval(() => {
-                    this.fetchSilverPrice();
-                }, this.updateInterval);
-            }
-
-            async fetchSilverPrice() {
-                try {
-                    // Using metals.live API (free tier)
-                    const response = await fetch('https://api.metals.live/v1/spot/silver');
-                    if (!response.ok) {
-                        throw new Error('Failed to fetch silver price');
-                    }
-                    const data = await response.json();
-
-                    // API returns price per troy ounce, convert to per gram
-                    // 1 troy ounce = 31.1035 grams
-                    if (data && data.silver) {
-                        const pricePerOunce = parseFloat(data.silver);
-                        this.silverPricePerGram = pricePerOunce / 31.1035;
-
-                        // Update all product prices
-                        this.updateAllProductPrices();
-
-                        // Update ticker
-                        this.updateTicker();
-
-                        this.lastUpdateTime = Date.now();
-                        console.log(`Silver price updated: ₹${this.silverPricePerGram.toFixed(2)}/g`);
-                    }
-                } catch (error) {
-                    console.warn('Could not fetch live silver price, using cached value:', error);
-                    // Update ticker with cached value
-                    this.updateTicker();
-                }
-            }
-
-            updateAllProductPrices() {
-                const productCards = document.querySelectorAll('.product-card');
-                productCards.forEach(card => {
-                    const weight = parseFloat(card.getAttribute('data-weight'));
-                    const makingCharge = parseFloat(card.getAttribute('data-making-charge'));
-
-                    if (!isNaN(weight) && !isNaN(makingCharge)) {
-                        const currentPrice = (this.silverPricePerGram * weight) + makingCharge;
-                        this.updateProductPrice(card, currentPrice, weight, makingCharge);
-                    }
-                });
-            }
-
-            updateProductPrice(card, price, weight, makingCharge) {
-                const priceElement = card.querySelector('.price');
-                const weightElement = card.querySelector('.weight');
-                const whatsappLink = card.querySelector('.order-btn');
-
-                if (priceElement) {
-                    // Update price display
-                    const formattedPrice = Math.round(price).toLocaleString('en-IN');
-                    priceElement.textContent = `₹${formattedPrice}`;
-                    priceElement.setAttribute('data-current-price', price);
-                }
-
-                if (weightElement) {
-                    // Update weight display
-                    weightElement.textContent = `Weight: ${weight}g`;
-                }
-
-                if (whatsappLink) {
-                    // Update WhatsApp link with current price
-                    const formattedPrice = Math.round(price).toLocaleString('en-IN');
-                    const productName = card.querySelector('h3')?.textContent || 'Product';
-                    const whatsappMessage = `Hello! I would like to order the ${productName} (₹${formattedPrice})`;
-
-                    // Extract number from existing href or use default
-                    const existingHref = whatsappLink.getAttribute('href') || '';
-                    const phoneMatch = existingHref.match(/wa\.me\/(\d+)/);
-                    const whatsappNumber = phoneMatch ? phoneMatch[1] : '919391381188';
-
-                    whatsappLink.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-                }
-            }
-
-            // Update the ticker with current silver price
-            updateTicker() {
-                const tickerElement = document.getElementById('silver-price-ticker');
-                if (tickerElement) {
-                    const formattedPrice = Math.round(this.silverPricePerGram * 100) / 100; // Keep 2 decimal places
-                    tickerElement.textContent = `Current Silver Price: ₹${formattedPrice.toFixed(2)}/g`;
-                }
-            }
-        }
-
-        // Initialize the silver price updater when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            window.silverPriceUpdater = new SilverPriceUpdater();
-        });
-
-        // Back to top button
-        document.addEventListener('DOMContentLoaded', function() {
-            // Create back to top button
-            const backToTop = document.createElement('button');
-            backToTop.innerHTML = '↑';
-            backToTop.className = 'back-to-top';
-            backToTop.title = 'Back to Top';
-            document.body.appendChild(backToTop);
-
-            // Show/hide button based on scroll position
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 300) {
-                    backToTop.classList.add('visible');
-                } else {
-                    backToTop.classList.remove('visible');
-                }
-            });
-
-            // Scroll to top when clicked
-            backToTop.addEventListener('click', () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
                 });
             });
         });

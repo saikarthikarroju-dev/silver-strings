@@ -433,7 +433,6 @@
             color: #aaa;
             margin-bottom: 40px;
             font-size: 1.2rem;
-            line-height: 1.6;
         }
         .care-grid {
             display: grid;
@@ -1090,105 +1089,243 @@
             transform: translateY(0);
         }
 
-        /* Ripple effect */
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(0);
-            pointer-events: none;
-            animation: rippleEffect 0.6s linear;
-        }
+       /* Ripple effect */
+   .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(0);
+      pointer-events: none;
+      animation: rippleEffect 0.6s linear;
+   }
 
-        @keyframes rippleEffect {
-            to {
-                transform: scale(2);
-                opacity: 0;
-            }
-        }
-        /* Water ripple effect */
-        .water-ripple {
-            position: fixed;
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%) scale(0);
-            pointer-events: none;
-            animation: waterRipple 0.6s linear forwards;
-            z-index: 9999;
-        }
+   @keyframes rippleEffect {
+      to {
+         transform: scale(2);
+         opacity: 0;
+      }
+   }
+   /* Water ripple effect */
+   .water-ripple {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%) scale(0);
+      pointer-events: none;
+      animation: waterRipple 0.6s linear forwards;
+      z-index: 9999;
+   }
 
-        @keyframes waterRipple {
-            to {
-                transform: translate(-50%, -50%) scale(20);
-                opacity: 0;
-            }
-        }
+   @keyframes waterRipple {
+      to {
+         transform: translate(-50%, -50%) scale(20);
+         opacity: 0;
+      }
+   }
 
-        /* Mobile Navigation Styles */
-        .nav-toggle {
-            display: none;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 25px;
-            height: 20px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1001;
-        }
+   /* Mobile Navigation Styles */
+   .nav-toggle {
+       display: none;
+       flex-direction: column;
+       justify-content: space-between;
+       width: 25px;
+       height: 20px;
+       background: transparent;
+       border: none;
+       cursor: pointer;
+       padding: 0;
+       z-index: 1001;
+   }
 
-        .nav-toggle .hamburger {
-            width: 100%;
-            height: 3px;
-            background-color: var(--text-light);
-            border-radius: 3px;
-            transition: all 0.3s ease;
-        }
+   .nav-toggle .hamburger {
+       width: 100%;
+       height: 3px;
+       background-color: var(--text-light);
+       border-radius: 3px;
+       transition: all 0.3s ease;
+   }
 
-        .nav-toggle.active .hamburger:nth-child(1) {
-            transform: translateY(8px) rotate(45deg);
-        }
+   .nav-toggle.active .hamburger:nth-child(1) {
+       transform: translateY(8px) rotate(45deg);
+   }
 
-        .nav-toggle.active .hamburger:nth-child(2) {
-            opacity: 0;
-        }
+   .nav-toggle.active .hamburger:nth-child(2) {
+       opacity: 0;
+   }
 
-        .nav-toggle.active .hamburger:nth-child(3) {
-            transform: translateY(-8px) rotate(-45deg);
-        }
+   .nav-toggle.active .hamburger:nth-child(3) {
+       transform: translateY(-8px) rotate(-45deg);
+   }
 
-        /* Silver Price Ticker */
-        .ticker {
-            width: 100%;
-            overflow: hidden;
-            background: rgba(0,0,0,0.7);
-            color: var(--accent-gold);
-            padding: 10px 0;
-            position: relative;
-            z-index: 998;
-            font-family: 'Silkscreen', cursive;
-            font-size: clamp(0.8rem, 1.5vw, 1rem);
-            letter-spacing: 1px;
-        }
+   @media screen and (max-width: 768px) {
+       .nav-toggle {
+           display: flex;
+       }
 
-        .ticker-track {
-            display: inline-block;
-            white-space: nowrap;
-            animation: tickerScroll 20s linear infinite;
-        }
+       .nav-links {
+           position: fixed;
+           top: 0;
+           right: -100%;
+           flex-direction: column;
+           background-color: rgba(0,0,0,0.98);
+           width: 100%;
+           height: 100vh;
+           padding-top: 100px;
+           transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+           z-index: 1000;
+           justify-content: center;
+           align-items: center;
+           backdrop-filter: blur(15px);
+       }
 
-        .ticker-text {
-            display: inline-block;
-            padding-left: 100%;
-        }
+       .nav-links.active {
+           right: 0;
+       }
 
-        @keyframes tickerScroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-        }
+       .nav-links a {
+           display: block;
+           margin: 15px 0;
+           padding: 15px 0;
+           font-size: 1.5rem;
+           text-align: center;
+           border-bottom: none;
+           width: 100%;
+           transition: var(--transition-smooth);
+       }
+
+       .nav-links a:hover {
+           color: var(--accent-gold);
+           transform: scale(1.1);
+       }
+
+       /* Adjust hero section for mobile */
+       .hero {
+           height: 70vh;
+           padding: 0 10px;
+       }
+
+       .hero h1 {
+           font-size: clamp(2rem, 8vw, 3.5rem);
+       }
+
+       .hero p {
+           font-size: 1rem;
+           margin-bottom: 2rem;
+       }
+
+       /* Adjust heritage section */
+       .heritage {
+           padding: 60px 5%;
+       }
+
+       .heritage-content {
+           flex-direction: column;
+           gap: 40px;
+       }
+
+       .heritage-text {
+           min-width: auto;
+       }
+
+       .heritage-img-box {
+           min-width: auto;
+           height: 300px;
+       }
+
+       /* Adjust gallery section */
+       .gallery {
+           padding: 60px 5%;
+       }
+
+       .gallery h2 {
+           font-size: 2rem;
+           margin-bottom: 2rem;
+       }
+
+       .gallery-grid {
+           display: grid;
+           grid-template-columns: repeat(2, 1fr);
+           gap: 15px;
+       }
+
+       .product-card {
+           min-width: 0;
+       }
+
+       .product-img-box {
+           height: 180px;
+       }
+
+       .product-info {
+           padding: 15px;
+       }
+
+       .product-info h3 {
+           font-size: 0.9rem;
+           margin-bottom: 10px;
+       }
+
+       .product-description {
+           font-size: 0.8rem;
+           margin-bottom: 15px;
+           display: -webkit-box;
+           -webkit-line-clamp: 3;
+           -webkit-box-orient: vertical;
+           overflow: hidden;
+           transition: max-height 0.4s ease;
+       }
+
+       .product-description.expanded {
+           display: block;
+           -webkit-line-clamp: unset;
+       }
+
+       .read-more-btn {
+           background: none;
+           border: none;
+           color: var(--accent-gold);
+           font-family: 'Cormorant Garamond', serif;
+           font-size: 0.75rem;
+           cursor: pointer;
+           padding: 0;
+           margin-bottom: 15px;
+           text-transform: uppercase;
+           letter-spacing: 1px;
+           font-weight: 600;
+           display: block;
+           transition: var(--transition-smooth);
+       }
+
+       .read-more-btn:hover {
+           color: var(--bright-silver);
+       }
+
+       .product-meta {
+           font-size: 0.8rem;
+       }
+
+       .price {
+           font-size: 0.9rem;
+       }
+
+       .order-btn {
+           padding: 8px;
+           font-size: 0.7rem;
+           letter-spacing: 1px;
+       }
+
+       /* Disable performance-heavy effects on mobile */
+       .water-ripple {
+           display: none !important;
+       }
+
+       /* Reduce video opacity for better performance on mobile */
+       .background-video {
+           opacity: 0.5 !important;
+       }
+   }
 </style>
 </head>
 <body>
@@ -1219,13 +1356,6 @@
             <span class="hamburger"></span>
         </button>
     </nav>
-
-    <!-- Silver Price Ticker -->
-    <div class="ticker">
-        <div class="ticker-track">
-            <span class="ticker-text" id="silver-price-ticker">Current Silver Price: ₹75.00/g</span>
-        </div>
-    </div>
 
     <section class="hero fade-in">
         <div class="hero-content">
@@ -1262,7 +1392,7 @@
         <h2>Curated Masterpieces</h2>
         <div class="gallery-grid">
             <!-- Item 1 -->
-            <div class="product-card" data-weight="12" data-making-charge="3600">
+            <div class="product-card">
                 <div class="product-img-box">
                     <img src="images/p1.jpg" alt="Pendant">
                 </div>
@@ -1270,14 +1400,14 @@
                     <h3>Intricate Floral Pendant</h3>
                     <p class="product-description">A delicate dance of silver threads and midnight blue, evoking the timeless grace of nature's bloom. An heirloom for the modern muse.</p>
                     <div class="product-meta">
-                        <span class="price" data-base-price="4500">₹4,500</span>
-                        <span class="weight" data-weight="12">Weight: 12g</span>
+                        <span class="price">₹4,500</span>
+                        <span class="weight">Weight: 12g</span>
                     </div>
                     <a href="https://wa.me/919391381188?text=Hello! I would like to order the Intricate Floral Pendant (₹4,500)" target="_blank" class="order-btn" onclick="return confirm('Are you sure!')">Order via WhatsApp</a>
                 </div>
             </div>
             <!-- Item 2 -->
-            <div class="product-card" data-weight="85" data-making-charge="5625">
+            <div class="product-card">
                 <div class="product-img-box">
                     <img src="images/p2.jpg" alt="Showpiece">
                 </div>
@@ -1285,14 +1415,14 @@
                     <h3>Sovereign Showpiece</h3>
                     <p class="product-description">A beacon of nobility. This hand-woven masterpiece captures the architectural grandeur of the Nizam's courts, casting a royal glow upon any space.</p>
                     <div class="product-meta">
-                        <span class="price" data-base-price="12000">₹12,000</span>
-                        <span class="weight" data-weight="85">Weight: 85g</span>
+                        <span class="price">₹12,000</span>
+                        <span class="weight">Weight: 85g</span>
                     </div>
                     <a href="https://wa.me/919391381188?text=Hello! I would like to order the Sovereign Showpiece (₹12,000)" target="_blank" class="order-btn" onclick="return confirm('Are you sure!')">Order via WhatsApp</a>
                 </div>
             </div>
             <!-- Item 3 -->
-            <div class="product-card" data-weight="15" data-making-charge="2075">
+            <div class="product-card">
                 <div class="product-img-box">
                     <img src="images/p3.jpg" alt="Tabletop Art">
                 </div>
@@ -1300,8 +1430,8 @@
                     <h3>Filigree Tabletop Art</h3>
                     <p class="product-description">A study in precision and poise. This anchor motif symbolizes strength anchored in elegance, weaving a story of nautical heritage in pure silver.</p>
                     <div class="product-meta">
-                        <span class="price" data-base-price="3200">₹3,200</span>
-                        <span class="weight" data-weight="15">Weight: 15g</span>
+                        <span class="price">₹3,200</span>
+                        <span class="weight">Weight: 15g</span>
                     </div>
                     <a href="https://wa.me/919391381188?text=Hello! I would like to order the Filigree Tabletop Art (₹3,200)" target="_blank" class="order-btn" onclick="return confirm('Are you sure!')">Order via WhatsApp</a>
                 </div>
@@ -1505,7 +1635,9 @@
         });
       });
     });
+  </script>
 
+  <script>
     // Video error handling
     document.addEventListener('DOMContentLoaded', function() {
       const video = document.querySelector('.background-video');
@@ -1517,172 +1649,49 @@
         });
       }
     });
-
-    // Ripple effect on click
-    document.addEventListener('click', function(e) {
-       const ripple = document.createElement('div');
-       ripple.classList.add('ripple');
-       const size = 100; // diameter of the ripple at full size
-       ripple.style.width = size + 'px';
-       ripple.style.height = size + 'px';
-       ripple.style.left = (e.clientX - size/2) + 'px';
-       ripple.style.top = (e.clientY - size/2) + 'px';
-       ripple.style.transform = 'scale(0)';
-       document.body.appendChild(ripple);
-
-       // Remove the ripple after the animation ends
-       ripple.addEventListener('animationend', function() {
-          ripple.remove();
-       });
-    });
-
-    // Mobile Navigation Toggle
-    document.addEventListener('DOMContentLoaded', function() {
-      const navToggle = document.getElementById('nav-toggle');
-      const navLinks = document.getElementById('nav-links');
-
-      navToggle.addEventListener('click', function() {
-        navToggle.classList.toggle('active');
-        navLinks.classList.toggle('active');
-      });
-
-      // Close mobile menu when clicking a link
-      navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', function() {
-          navToggle.classList.remove('active');
-          navLinks.classList.remove('active');
-        });
-      });
-    });
-
-    // Live Silver Price Updater
-    class SilverPriceUpdater {
-      constructor() {
-        this.silverPricePerGram = 75; // Default fallback price (INR per gram)
-        this.updateInterval = 300000; // 5 minutes in milliseconds
-        this.lastUpdateTime = 0;
-
-        // Initialize prices
-        this.initializeProductPrices();
-
-        // Fetch initial price
-        this.fetchSilverPrice();
-
-        // Set up periodic updates
-        setInterval(() => {
-          this.fetchSilverPrice();
-        }, this.updateInterval);
-      }
-
-      // Initialize product prices based on stored data attributes
-      initializeProductPrices() {
-        const productCards = document.querySelectorAll('.product-card');
-        productCards.forEach(card => {
-          const weight = parseFloat(card.getAttribute('data-weight'));
-          const makingCharge = parseFloat(card.getAttribute('data-making-charge'));
-
-          if (!isNaN(weight) && !isNaN(makingCharge)) {
-            // Calculate initial price using default silver price
-            const initialPrice = (this.silverPricePerGram * weight) + makingCharge;
-            this.updateProductPrice(card, initialPrice, weight, makingCharge);
-          }
-        });
-
-        // Initialize ticker with default price
-        this.updateTicker();
-      }
-
-      // Fetch current silver price from API
-      async fetchSilverPrice() {
-        try {
-          // Using metals.live API (free tier, may need to adjust based on availability)
-          const response = await fetch('https://api.metals.live/v1/spot/silver');
-          if (!response.ok) {
-            throw new Error('Failed to fetch silver price');
-          }
-          const data = await response.json();
-
-          // Assuming API returns price per ounce, convert to per gram
-          // 1 troy ounce = 31.1035 grams
-          if (data && data.silver) {
-            const pricePerOunce = parseFloat(data.silver);
-            this.silverPricePerGram = pricePerOunce / 31.1035;
-
-            // Update all product prices
-            this.updateAllProductPrices();
-
-            // Update ticker
-            this.updateTicker();
-
-            this.lastUpdateTime = Date.now();
-            console.log(`Silver price updated: ₹${this.silverPricePerGram.toFixed(2)}/g`);
-          }
-        } catch (error) {
-          console.warn('Could not fetch live silver price, using cached value:', error);
-          // Keep using the last known price
-          // Update ticker with cached value
-          this.updateTicker();
-        }
-      }
-
-      // Update all product prices with current silver price
-      updateAllProductPrices() {
-        const productCards = document.querySelectorAll('.product-card');
-        productCards.forEach(card => {
-          const weight = parseFloat(card.getAttribute('data-weight'));
-          const makingCharge = parseFloat(card.getAttribute('data-making-charge'));
-
-          if (!isNaN(weight) && !isNaN(makingCharge)) {
-            const currentPrice = (this.silverPricePerGram * weight) + makingCharge;
-            this.updateProductPrice(card, currentPrice, weight, makingCharge);
-          }
-        });
-      }
-
-      // Update individual product price and WhatsApp link
-      updateProductPrice(card, price, weight, makingCharge) {
-        const priceElement = card.querySelector('.price');
-        const weightElement = card.querySelector('.weight');
-        const whatsappLink = card.querySelector('.order-btn');
-
-        if (priceElement) {
-          // Update price display
-          const formattedPrice = Math.round(price).toLocaleString('en-IN');
-          priceElement.textContent = `₹${formattedPrice}`;
-          priceElement.setAttribute('data-current-price', price);
-        }
-
-        if (weightElement) {
-          // Update weight display (in case it changed)
-          weightElement.textContent = `Weight: ${weight}g`;
-        }
-
-        if (whatsappLink) {
-          // Update WhatsApp link with current price
-          const formattedPrice = Math.round(price).toLocaleString('en-IN');
-          const productName = card.querySelector('h3')?.textContent || 'Product';
-          const whatsappMessage = `Hello! I would like to order the ${productName} (₹${formattedPrice})`;
-          const whatsappNumber = '919391381188'; // Extract from existing link or use default
-
-          whatsappLink.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-        }
-      }
-
-      // Update the ticker with current silver price
-      updateTicker() {
-        const tickerElement = document.getElementById('silver-price-ticker');
-        if (tickerElement) {
-          const formattedPrice = Math.round(this.silverPricePerGram * 100) / 100; // Keep 2 decimal places
-          tickerElement.textContent = `Current Silver Price: ₹${formattedPrice.toFixed(2)}/g`;
-        }
-      }
-    }
-
-    // Initialize the silver price updater when DOM is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-      window.silverPriceUpdater = new SilverPriceUpdater();
-    });
   </script>
 
+   <script>
+     // Ripple effect on click
+     document.addEventListener('click', function(e) {
+        const ripple = document.createElement('div');
+        ripple.classList.add('ripple');
+        const size = 100; // diameter of the ripple at full size
+        ripple.style.width = size + 'px';
+        ripple.style.height = size + 'px';
+        ripple.style.left = (e.clientX - size/2) + 'px';
+        ripple.style.top = (e.clientY - size/2) + 'px';
+        ripple.style.transform = 'scale(0)';
+        document.body.appendChild(ripple);
+
+        // Remove the ripple after the animation ends
+        ripple.addEventListener('animationend', function() {
+           ripple.remove();
+        });
+     });
+   </script>
+
+   <!-- Mobile Navigation Toggle -->
+   <script>
+     document.addEventListener('DOMContentLoaded', function() {
+       const navToggle = document.getElementById('nav-toggle');
+       const navLinks = document.getElementById('nav-links');
+
+       navToggle.addEventListener('click', function() {
+         navToggle.classList.toggle('active');
+         navLinks.classList.toggle('active');
+       });
+
+       // Close mobile menu when clicking a link
+       navLinks.querySelectorAll('a').forEach(link => {
+         link.addEventListener('click', function() {
+           navToggle.classList.remove('active');
+           navLinks.classList.remove('active');
+         });
+       });
+     });
+   </script>
 </body>
 </html>
+
+
