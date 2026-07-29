@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silver Photo Frames | Silver Strings</title>
+    <meta name="description" content="Handcrafted silver photo frames - Masterpieces of Karimnagar Filigree.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Inter:wght@200;300;400;500;600&family=Silkscreen:wght@400;700&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --charcoal: #050505;
+            --deep-grey: #0f0f0f;
+            --silver: #C0C0C0;
+            --bright-silver: #E8E8E8;
+            --accent-gold: #D4AF37;
+            --text-light: #fdfdfd;
+            --glass-bg: rgba(10, 10, 10, 0.75);
+            --dark-gold: #B8860B;
+            --light-gold: #F5DEB3;
+            --champagne: #F7E7CE;
+            --soft-cream: #F5F5DC;
+            --luxury-border: rgba(247, 231, 206, 0.3);
+            --shadow-depth: 0 10px 30px rgba(0,0,0,0.5);
+            --shadow-lg: 0 20px 40px rgba(0,0,0,0.6);
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --transition-fast: all 0.2s ease;
+        }
+
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -2;
+        }
+
+        .background-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            opacity: 0.75;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            transition: background-color 0.3s, color 0.3s, box-shadow 0.3s, transform 0.3s;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--charcoal);
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(108, 92, 23, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(108, 92, 23, 0.1) 0%, transparent 20%);
+            background-attachment: fixed;
+        }
+
+        h1, h2, h3, .brand-font {
+            font-family: 'Silkscreen', cursive;
+        }
+
+        h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .serif-font {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+        }
+
+        .premium-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: var(--transition-smooth);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        nav.scrolled {
+            background-color: rgba(0,0,0,0.9);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+        }
+
+        .logo {
+            font-family: 'Silkscreen', cursive;
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--silver);
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--bright-silver);
+        }
+
+        .hero {
+            position: relative;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: transparent;
+            padding: 0 20px;
+            overflow: hidden;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7));
+        }
+
+        .hero-image-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('images/hero.jpg') center/cover;
+            z-index: 1;
+            transition: transform 0.8s ease, opacity 0.5s ease;
+            opacity: 0.7;
+        }
+
+        .hero:hover .hero-image-bg {
+            transform: scale(1.05);
+            opacity: 0.8;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            margin-bottom: 1rem;
+            color: var(--bright-silver);
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            background: linear-gradient(to right, var(--bright-silver) 20%, var(--accent-gold) 40%, var(--bright-silver) 60%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .hero p {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            color: var(--silver);
+            line-height: 1.7;
+            letter-spacing: 0.5px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .cta-button {
+            padding: 1rem 2.5rem;
+            border: 1px solid var(--silver);
+            color: var(--silver);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(5px);
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: var(--silver);
+            color: black;
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255,255,255,0.2),
+                transparent
+            );
+            transition: all 0.6s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .gallery {
+            padding: 100px 5%;
+            text-align: center;
+            background-color: rgba(5, 5, 5, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--bright-silver);
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            letter-spacing: -1px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .gallery h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent-gold);
+            border-radius: 2px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: rgba(17, 17, 17, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border-radius: 12px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition-smooth);
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .product-img-box {
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3));
+        }
+
+        .product-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+
+        .product-info {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-info h3 {
+            font-size: 1.3rem;
+            color: var(--bright-silver);
+            margin-bottom: 15px;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .product-description {
+            font-size: 1rem;
+            color: #ccc;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+
+        .price {
+            color: var(--accent-gold);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .weight {
+            color: #aaa;
+        }
+
+        .order-btn {
+            display: block;
+            text-align: center;
+            padding: 14px;
+            background: var(--accent-gold);
+            color: white;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            transition: var(--transition-smooth);
+            border-radius: 6px;
+            margin-top: auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .order-btn:hover {
+            background: var(--light-gold);
+            color: #111;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        footer {
+            padding: 40px 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #888;
+            font-size: 0.75rem;
+            position: relative;
+            margin-top: 60px;
+        }
+
+        footer p {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            font-weight: 300;
+        }
+
+        footer p::before,
+        footer p::after {
+            content: '';
+            width: 50px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--accent-gold), transparent);
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 25px;
+            height: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+        }
+
+        .nav-toggle .hamburger {
+            width: 100%;
+            height: 3px;
+            background-color: var(--text-light);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                flex-direction: column;
+                background-color: rgba(0,0,0,0.98);
+                width: 100%;
+                height: 100vh;
+                padding-top: 100px;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 1000;
+                justify-content: center;
+                align-items: center;
+                backdrop-filter: blur(15px);
+            }
+
+            .nav-links a {
+                display: block;
+                margin: 15px 0;
+                padding: 15px 0;
+                font-size: 1.5rem;
+                text-align: center;
+                border-bottom: none;
+                width: 100%;
+                transition: var(--transition-smooth);
+            }
+
+            .hero {
+                height: 70vh;
+                padding: 0 10px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s same;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <video autoplay muted loop playsinline class="background-video">
+            <source src="videos/artisans-work.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <nav>
+        <a href="index.html" class="logo">Silver Strings</a>
+        <div class="nav-links" id="nav-links">
+            <a href="index.html">Home</a>
+            <a href="pens.html">Silver Pens</a>
+            <a href="photoframes.html">Photo Frames</a>
+            <a href="stands.html">Silver Stands</a>
+            <a href="https://wa.me/919391381188" target="_blank">Contact</a>
+        </div>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+            <span class="hamburger"></span>
+            <span class="hamburger"></span>
+            <span class="hamburger"></span>
+        </button>
+    </nav>
+
+    <section class="hero fade-in">
+        <div class="hero-image-bg"></div>
+        <div class="hero-content">
+            <h1>Silver Photo Frames</h1>
+            <p class="serif-font">Preserving memories in pure silver. Handcrafted frames that blend heritage artistry with timeless elegance.</p>
+            <a href="#gallery" class="cta-button">Explore the Collection</a>
+        </div>
+    </section>
+
+    <section id="gallery" class="gallery fade-in">
+        <h2>Curated Frame Collection</h2>
+        <div class="gallery-grid">
+            <!-- Product 1 -->
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="images/frame1.jpg" alt="Silver Filigree Frame">
+                </div>
+                <div class="product-info">
+                    <h3>Imperial Filigree Frame</h3>
+                    <p class="product-description">A majestic frame adorned with intricate silver weaves, perfect for capturing the most cherished moments of a lifetime.</p>
+                    <div class="product-meta">
+                        <span class="price">₹15,000</span>
+                        <span class="weight">Weight: 120g</span>
+                    </div>
+                    <a href="https://wa.me/919391381188?text=Hello! I would like to order the Imperial Filigree Frame (₹15,000)" target="_blank" class="order-btn">Order via WhatsApp</a>
+                </div>
+            </div>
+            <!-- Product 2 -->
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="images/frame2.jpg" alt="Silver Filigree Frame">
+                </div>
+                <div class="product-info">
+                    <h3>Classic Tarkasi Frame</h3>
+                    <p class="product-description">Timeless elegance in every curve. This frame showcases the purity of silver filigree in a sophisticated, minimalist design.</p>
+                    <div class="product-meta">
+                        <span class="price">₹9,500</span>
+                        <span class="weight">Weight: 80g</span>
+                    </div>
+                    <a href="https://wa.me/919391381188?text=Hello! I would like to order the Classic Tarkasi Frame (₹9,500)" target="_blank" class="order-btn">Order via WhatsApp</a>
+                </div>
+            </div>
+            <!-- Product 3 -->
+            <div class="product-card">
+                <div class="product-img-box">
+                    <img src="images/frame3.jpg" alt="Silver Filigree Frame">
+                </div>
+                <div class="product-info">
+                    <h3>Royal Heritage Frame</h3>
+                    <p class="product-description">A tribute to royal courts. This heavily detailed frame brings an aura of nobility to any photograph it holds.</p>
+                    <div class="product-meta">
+                        <span class="price">₹22,000</span>
+                        <span class="weight">Weight: 200g</span>
+                    </div>
+                    <a href="https://wa.me/919391381188?text=Hello! I would like to order the Royal Heritage Frame (₹22,000)" target="_blank" class="order-btn">Order via WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Silver Strings. Handcrafted in Karimnagar, Telangana.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersectIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            fadeElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const nav = document.querySelector('nav');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.getElementById('nav-toggle');
+            const navLinks = document.getElementById('nav-links');
+
+            navToggle.addEventListener('click', function() {
+                navToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function() {
+                    navToggle.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
