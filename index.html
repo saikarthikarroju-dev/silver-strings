@@ -1212,6 +1212,11 @@
             opacity: 0.9;
         }
 
+        .price-banner .price-label.promo {
+            color: var(--accent-gold);
+            opacity: 1;
+        }
+
         .price-banner .price-value {
             color: var(--accent-gold);
             font-weight: 700;
@@ -1282,20 +1287,7 @@
 
     <!-- Silver Price Banner -->
     <div class="price-banner loading" id="price-banner" role="status" aria-live="polite">
-        <div class="ticker-track" id="price-ticker-track">
-            <span class="ticker-segment">
-                <span class="price-label">Current Silver Price:</span>
-                <span class="price-value" id="silver-price-ticker">Loading…</span>
-                <span class="price-refresh" id="price-refresh"></span>
-                <span class="price-error">Live data unavailable</span>
-            </span>
-            <span class="ticker-segment" aria-hidden="true">
-                <span class="price-label">Current Silver Price:</span>
-                <span class="price-value" id="silver-price-ticker-clone">Loading…</span>
-                <span class="price-refresh" id="price-refresh-clone"></span>
-                <span class="price-error">Live data unavailable</span>
-            </span>
-        </div>
+        <div class="ticker-track" id="price-ticker-track"></div>
     </div>
 
     <section class="hero fade-in">
@@ -1641,6 +1633,14 @@
         this.cacheMaxAgeMs = 6 * 60 * 60 * 1000; // 6 hours
         this.endpoint = '/api/silver-rate';
 
+        // Static promo/heritage segments interleaved with the live price in the
+        // scrolling ticker. Edit text here to change the marquee copy site-wide.
+        this.staticSegments = [
+          { text: '✦ GI Certified Authentic Filigree' },
+          { text: '✦ Free Shipping on orders above ₹5,000' },
+          { text: '✦ Handcrafted in Karimnagar, Telangana' }
+        ];
+
         this.loadFromCache();
         this.initializeProductPrices();
         this.updateTicker();
@@ -1735,37 +1735,58 @@
 
       updateTicker(isError = false, asOf = null) {
         const banner = document.getElementById('price-banner');
-        const tickerElement = document.getElementById('silver-price-ticker');
-        const tickerClone = document.getElementById('silver-price-ticker-clone');
-        const refreshElement = document.getElementById('price-refresh');
-        const refreshClone = document.getElementById('price-refresh-clone');
-        if (!tickerElement || !banner) return;
+        const track = document.getElementById('price-ticker-track');
+        if (!track || !banner) return;
 
-        const formatted = `₹${this.silverPricePerGram.toFixed(2)}/g`;
-        tickerElement.textContent = formatted;
-        if (tickerClone) tickerClone.textContent = formatted;
+        // Format the refresh label once, then reuse for every price segment in the track.
+        const refreshLabel = this.formatRefreshLabel(asOf);
+        const formattedPrice = `₹${this.silverPricePerGram.toFixed(2)}/g`;
+
+        // Build the unique content (one primary price + three promo/heritage lines).
+        const primaryHtml = `
+          <span class="price-label">Current Silver Price:</span>
+          <span class="price-value">${formattedPrice}</span>
+          <span class="price-refresh">${refreshLabel}</span>
+          <span class="price-error">Live data unavailable</span>
+        `;
+        const promoSegments = this.staticSegments;
+        const uniqueSegments = [
+          { html: primaryHtml },
+          ...promoSegments.map(s => ({ html: `<span class="price-label promo">${s.text}</span>` }))
+        ];
+
+        // Render the unique set, then duplicate it for a seamless marquee loop.
+        // The CSS `transform: translateX(-100%)` animation slides past the first
+        // copy and lands exactly on the second, hiding the wrap-around jump.
+        track.innerHTML = '';
+        const renderSet = () => uniqueSegments.map(seg => {
+          const el = document.createElement('span');
+          el.className = 'ticker-segment';
+          el.innerHTML = seg.html;
+          return el;
+        });
+        renderSet().forEach(el => track.appendChild(el));
+        renderSet().forEach(el => track.appendChild(el));
+
         banner.classList.remove('loading');
         banner.classList.toggle('error', !!isError);
+      }
 
-        let label;
+      formatRefreshLabel(asOf) {
         if (asOf) {
           try {
             const d = new Date(asOf);
             if (!isNaN(d.getTime())) {
               const hh = String(d.getHours()).padStart(2, '0');
               const mm = String(d.getMinutes()).padStart(2, '0');
-              label = `(as of ${hh}:${mm})`;
+              return `(as of ${hh}:${mm})`;
             }
           } catch (_) { /* fall through */ }
         }
-        if (!label) {
-          const now = new Date();
-          const hh = String(now.getHours()).padStart(2, '0');
-          const mm = String(now.getMinutes()).padStart(2, '0');
-          label = `(updated ${hh}:${mm})`;
-        }
-        if (refreshElement) refreshElement.textContent = label;
-        if (refreshClone) refreshClone.textContent = label;
+        const now = new Date();
+        const hh = String(now.getHours()).padStart(2, '0');
+        const mm = String(now.getMinutes()).padStart(2, '0');
+        return `(updated ${hh}:${mm})`;
       }
     }
 
