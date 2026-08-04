@@ -165,6 +165,11 @@ async function getRemoteSha(repo, branch, pat) {
       'User-Agent': 'silver-strings-admin',
     },
   });
+  if (res.status === 404) {
+    // File doesn't exist on the branch yet — Contents API treats that as a
+    // create, not an update. Return null so the PUT omits `sha`.
+    return null;
+  }
   if (!res.ok) {
     const detail = await res.text().catch(() => '');
     throw new Error(`GitHub GET sha failed: ${res.status} ${detail.slice(0, 200)}`);
@@ -181,8 +186,8 @@ async function putToGithub(repo, branch, pat, sha, products) {
     message: 'admin: update product data',
     content: Buffer.from(JSON.stringify(products, null, 2), 'utf8').toString('base64'),
     branch,
-    sha,
   };
+  if (sha) body.sha = sha; // include only when updating an existing file
   const res = await fetchWithTimeout(url, {
     method: 'PUT',
     headers: {
@@ -267,11 +272,16 @@ module.exports = async function handler(req, res) {
         if (putRes.ok) {
           const data = await putRes.json().catch(() => ({}));
           writeDiskCache(products);
-          // Invalidate sha cache so the next read re-fetches and confirms.
-          try { fs.unlinkSync(SHA_CACHE_FILE); } catch (_) {}
+          const newSha = data && data.content && data.content.sha;
+          if (newSha) {
+            writeShaCache(newSha);
+          } else {
+            // No sha in the response — clear cache so the next read refetches.
+            try { fs.unlinkSync(SHA_CACHE_FILE); } catch (_) {}
+          }
           return res.status(200).json({
             ok: true,
-            sha: data && data.content && data.content.sha,
+            sha: newSha,
             version: products.version,
             products,
           });
