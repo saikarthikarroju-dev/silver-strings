@@ -10,20 +10,20 @@
           "order": 1,
           "title": "Sri OM",
           "description": "A delicate dance of silver threads and midnight blue, evoking the timeless grace of nature's bloom. An heirloom for the modern muse.",
-          "image": "p1.jpg",
+          "image": "p2.jpg",
           "imageAlt": "Pendant",
-          "weight": 12,
+          "weight": 100,
           "makingCharge": 3600,
-          "tag": "Pendant"
+          "tag": "Silver"
         },
         {
           "id": "home-2",
           "order": 2,
-          "title": "Sovereign Showpiece",
+          "title": "Ganesh",
           "description": "A beacon of nobility. This hand-woven masterpiece captures the architectural grandeur of the Nizam's courts, casting a royal glow upon any space.",
           "image": "p2.jpg",
           "imageAlt": "Showpiece",
-          "weight": 85,
+          "weight": 200,
           "makingCharge": 5625,
           "tag": "Showpiece"
         },
@@ -52,7 +52,7 @@
           "image": "pen1.jpg",
           "imageAlt": "Silver Filigree Pen",
           "weight": 45,
-          "makingCharge": 4750,
+          "makingCharge": 30000,
           "tag": "Pen"
         },
         {
