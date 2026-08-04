@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silver Strings — Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@200;300;400;500;600&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --charcoal: #050505;
+            --deep-grey: #0f0f0f;
+            --silver: #C0C0C0;
+            --bright-silver: #E8E8E8;
+            --accent-gold: #D4AF37;
+            --dark-gold: #B8860B;
+            --light-gold: #F5DEB3;
+            --champagne: #F7E7CE;
+            --luxury-border: rgba(247, 231, 206, 0.3);
+            --text-light: #fdfdfd;
+            --danger: #e8a8a8;
+            --success: #a8e8a8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body { min-height: 100%; }
+
+        body {
+            background-color: var(--charcoal);
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+            padding: 24px 5% 80px;
+            background-image:
+                radial-gradient(circle at 10% 0%, rgba(108, 92, 23, 0.1) 0%, transparent 30%),
+                radial-gradient(circle at 90% 100%, rgba(108, 92, 23, 0.08) 0%, transparent 30%);
+            background-attachment: fixed;
+        }
+
+        h1, h2, h3 { font-family: 'Cormorant Garamond', serif; }
+        .serif { font-family: 'Playfair Display', serif; font-style: italic; }
+
+        a { color: var(--accent-gold); }
+
+        /* ----- Top bar ----- */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 22px;
+            border: 1px solid var(--luxury-border);
+            border-radius: 8px;
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 12px;
+            z-index: 50;
+            margin-bottom: 24px;
+        }
+        .topbar h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--bright-silver);
+            letter-spacing: 0.5px;
+        }
+        .topbar h1 small {
+            display: block;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 300;
+            color: var(--silver);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+        .actions { display: flex; gap: 10px; align-items: center; }
+        .actions button {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 9px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid var(--luxury-border);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-light);
+        }
+        .actions button:hover:not(:disabled) { border-color: var(--accent-gold); color: var(--accent-gold); }
+        .actions button:disabled { opacity: 0.4; cursor: not-allowed; }
+        .actions button.primary {
+            background: var(--accent-gold);
+            color: #111;
+            border-color: var(--accent-gold);
+            font-weight: 600;
+        }
+        .actions button.primary:hover:not(:disabled) { background: var(--light-gold); color: #111; }
+
+        /* ----- Password gate ----- */
+        .gate {
+            max-width: 420px;
+            margin: 80px auto 0;
+            padding: 36px 30px;
+            border: 1px solid var(--luxury-border);
+            border-radius: 8px;
+            background: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(8px);
+            text-align: center;
+        }
+        .gate h2 {
+            font-size: 2rem;
+            color: var(--bright-silver);
+            margin-bottom: 8px;
+        }
+        .gate p.serif { color: #aaa; font-size: 0.95rem; margin-bottom: 24px; }
+        .gate input {
+            width: 100%;
+            padding: 12px 14px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--luxury-border);
+            border-radius: 4px;
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            margin-bottom: 14px;
+        }
+        .gate input:focus { outline: none; border-color: var(--accent-gold); }
+        .gate button {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent-gold);
+            color: #111;
+            border: none;
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+        .gate button:hover { background: var(--light-gold); }
+        .gate .err { color: var(--danger); margin-top: 12px; font-size: 0.85rem; min-height: 1.2em; }
+
+        /* ----- Page sections ----- */
+        details.page-section {
+            border: 1px solid var(--luxury-border);
+            border-radius: 8px;
+            background: rgba(15, 15, 15, 0.55);
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+        details.page-section > summary {
+            cursor: pointer;
+            padding: 18px 22px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--bright-silver);
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(212, 175, 55, 0.05);
+        }
+        details.page-section > summary::-webkit-details-marker { display: none; }
+        details.page-section > summary::after {
+            content: '+';
+            color: var(--accent-gold);
+            font-size: 1.4rem;
+            line-height: 1;
+        }
+        details.page-section[open] > summary::after { content: '−'; }
+
+        .row-list { padding: 8px 0; }
+
+        /* ----- Product row ----- */
+        .row {
+            display: grid;
+            grid-template-columns: 32px 56px 1fr auto;
+            gap: 16px;
+            align-items: center;
+            padding: 14px 22px;
+            border-top: 1px solid rgba(247, 231, 206, 0.08);
+        }
+        .row:first-child { border-top: none; }
+        .row .order {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            color: var(--accent-gold);
+            text-align: center;
+        }
+        .row .thumb {
+            width: 56px;
+            height: 56px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            object-fit: cover;
+        }
+        .row .thumb.empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .row .meta { min-width: 0; }
+        .row .meta .title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            color: var(--bright-silver);
+            margin-bottom: 4px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .row .meta .sub {
+            font-size: 0.78rem;
+            color: #aaa;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .row .meta .sub .chip {
+            display: inline-block;
+            padding: 2px 8px;
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            border-radius: 999px;
+            font-size: 0.68rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .row button.edit {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .row button.edit:hover { background: var(--accent-gold); color: #111; }
+
+        /* ----- Edit dialog ----- */
+        dialog.edit-dialog {
+            border: 1px solid var(--luxury-border);
+            border-radius: 12px;
+            background: var(--deep-grey);
+            color: var(--text-light);
+            padding: 0;
+            max-width: 540px;
+            width: 92%;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+        }
+        dialog.edit-dialog::backdrop {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+        }
+        .dialog-head {
+            padding: 20px 26px;
+            border-bottom: 1px solid var(--luxury-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .dialog-head h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--bright-silver);
+        }
+        .dialog-head button.close {
+            background: none;
+            border: none;
+            color: var(--silver);
+            font-size: 1.4rem;
+            cursor: pointer;
+            line-height: 1;
+            padding: 4px 10px;
+        }
+        .dialog-head button.close:hover { color: var(--accent-gold); }
+        .dialog-body { padding: 20px 26px; }
+        .field { margin-bottom: 16px; }
+        .field label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent-gold);
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        .field input, .field textarea, .field select {
+            width: 100%;
+            padding: 10px 12px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--luxury-border);
+            border-radius: 4px;
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+        }
+        .field textarea { min-height: 80px; resize: vertical; }
+        .field input:focus, .field textarea:focus, .field select:focus {
+            outline: none; border-color: var(--accent-gold);
+        }
+        .field-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+        .dialog-foot {
+            padding: 16px 26px;
+            border-top: 1px solid var(--luxury-border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        .dialog-foot button {
+            padding: 10px 18px;
+            border-radius: 4px;
+            border: 1px solid var(--luxury-border);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+        }
+        .dialog-foot button:hover { border-color: var(--accent-gold); }
+        .dialog-foot button.primary {
+            background: var(--accent-gold);
+            color: #111;
+            border-color: var(--accent-gold);
+            font-weight: 600;
+        }
+        .dialog-foot button.primary:hover { background: var(--light-gold); }
+        .field .err {
+            color: var(--danger);
+            font-size: 0.75rem;
+            margin-top: 4px;
+            min-height: 1em;
+        }
+
+        /* ----- Toast ----- */
+        .toast-wrap {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 1000;
+            pointer-events: none;
+        }
+        .toast {
+            padding: 12px 22px;
+            border-radius: 4px;
+            background: rgba(15, 15, 15, 0.95);
+            border: 1px solid var(--luxury-border);
+            color: var(--text-light);
+            font-size: 0.85rem;
+            backdrop-filter: blur(8px);
+            animation: toastIn 0.25s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            max-width: 80vw;
+        }
+        .toast.success { border-color: var(--success); color: var(--success); }
+        .toast.error { border-color: var(--danger); color: var(--danger); }
+        @keyframes toastIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hidden { display: none !important; }
+        .spinner {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 640px) {
+            .field-row { grid-template-columns: 1fr; }
+            .row { grid-template-columns: 32px 48px 1fr; }
+            .row button.edit { grid-column: 2 / span 2; justify-self: start; }
+            .topbar h1 { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="toast-wrap" id="toast-wrap" aria-live="polite"></div>
+
+    <!-- Password gate -->
+    <div class="gate" id="gate">
+        <h2>Silver Strings Admin</h2>
+        <p class="serif">Enter the admin password to edit products.</p>
+        <input type="password" id="pw" autocomplete="current-password" placeholder="Password">
+        <button id="pw-btn">Sign in</button>
+        <p class="err" id="pw-err"></p>
+    </div>
+
+    <!-- Admin app -->
+    <div id="app" class="hidden">
+        <div class="topbar">
+            <h1>Products<small>Edit & publish</small></h1>
+            <div class="actions">
+                <button id="btn-discard" disabled>Discard</button>
+                <button id="btn-signout">Sign out</button>
+                <button id="btn-save" class="primary" disabled>Save</button>
+            </div>
+        </div>
+        <div id="sections"></div>
+    </div>
+
+    <!-- Edit dialog -->
+    <dialog class="edit-dialog" id="edit-dialog">
+        <div class="dialog-head">
+            <h3 id="edit-title">Edit product</h3>
+            <button class="close" id="edit-close" aria-label="Close">×</button>
+        </div>
+        <form id="edit-form" method="dialog">
+            <div class="dialog-body">
+                <div class="field">
+                    <label for="f-title">Title</label>
+                    <input type="text" id="f-title" maxlength="120" required>
+                    <p class="err" id="err-title"></p>
+                </div>
+                <div class="field">
+                    <label for="f-description">Description</label>
+                    <textarea id="f-description" maxlength="500" required></textarea>
+                    <p class="err" id="err-description"></p>
+                </div>
+                <div class="field">
+                    <label for="f-image">Image</label>
+                    <select id="f-image" required></select>
+                    <p class="err" id="err-image"></p>
+                </div>
+                <div class="field-row">
+                    <div class="field">
+                        <label for="f-weight">Weight (g)</label>
+                        <input type="number" id="f-weight" min="0.1" max="5000" step="0.1" required>
+                        <p class="err" id="err-weight"></p>
+                    </div>
+                    <div class="field">
+                        <label for="f-making">Making (₹)</label>
+                        <input type="number" id="f-making" min="0" max="1000000" step="1" required>
+                        <p class="err" id="err-making"></p>
+                    </div>
+                    <div class="field">
+                        <label for="f-order">Order</label>
+                        <input type="number" id="f-order" min="0" max="99" step="1" required>
+                        <p class="err" id="err-order"></p>
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="f-tag">Tag (optional)</label>
+                    <input type="text" id="f-tag" maxlength="32">
+                    <p class="err" id="err-tag"></p>
+                </div>
+            </div>
+            <div class="dialog-foot">
+                <button type="button" id="edit-cancel">Cancel</button>
+                <button type="submit" class="primary" id="edit-save">Save</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script>
+    (function () {
+        'use strict';
+
+        var PW_KEY = 'ss_admin_pw';
+        var PAGE_SLUGS = ['home', 'pens', 'frames', 'stands'];
+        var PAGE_LABELS = { home: 'Home', pens: 'Silver Pens', frames: 'Photo Frames', stands: 'Silver Stands' };
+
+        // ----- state -----
+        var serverData = null;   // last good server response
+        var draftData = null;    // editable copy
+        var dirty = false;
+        var editingPage = null;
+        var editingIndex = -1;
+        var availableImages = [];
+
+        // ----- elements -----
+        var $gate = document.getElementById('gate');
+        var $app = document.getElementById('app');
+        var $pw = document.getElementById('pw');
+        var $pwBtn = document.getElementById('pw-btn');
+        var $pwErr = document.getElementById('pw-err');
+        var $sections = document.getElementById('sections');
+        var $btnSave = document.getElementById('btn-save');
+        var $btnDiscard = document.getElementById('btn-discard');
+        var $btnSignout = document.getElementById('btn-signout');
+        var $dialog = document.getElementById('edit-dialog');
+        var $toastWrap = document.getElementById('toast-wrap');
+
+        // ----- toast -----
+        function toast(msg, kind) {
+            var el = document.createElement('div');
+            el.className = 'toast' + (kind ? ' ' + kind : '');
+            el.textContent = msg;
+            $toastWrap.appendChild(el);
+            setTimeout(function () {
+                el.style.transition = 'opacity 0.4s';
+                el.style.opacity = '0';
+                setTimeout(function () { el.remove(); }, 400);
+            }, 3500);
+        }
+
+        // ----- password -----
+        function getPw() { return sessionStorage.getItem(PW_KEY) || ''; }
+        function setPw(p) { sessionStorage.setItem(PW_KEY, p); }
+        function clearPw() { sessionStorage.removeItem(PW_KEY); }
+
+        async function tryLoad(pw) {
+            var res = await fetch('/api/products', {
+                headers: { 'x-admin-password': pw },
+                cache: 'no-store',
+            });
+            if (res.status === 401) return { ok: false, reason: 'wrong' };
+            if (!res.ok) return { ok: false, reason: 'http' };
+            var data = await res.json();
+            return { ok: true, data: data };
+        }
+
+        async function attemptLogin(pw) {
+            var r = await tryLoad(pw);
+            if (!r.ok) {
+                $pwErr.textContent = r.reason === 'wrong' ? 'Wrong password.' : 'Could not load admin. Try again.';
+                return;
+            }
+            setPw(pw);
+            serverData = r.data.products;
+            draftData = JSON.parse(JSON.stringify(serverData));
+            unlock();
+        }
+
+        function unlock() {
+            $gate.classList.add('hidden');
+            $app.classList.remove('hidden');
+            renderAll();
+        }
+
+        function lock() {
+            clearPw();
+            serverData = null;
+            draftData = null;
+            dirty = false;
+            $app.classList.add('hidden');
+            $gate.classList.remove('hidden');
+            $pw.value = '';
+            $pwErr.textContent = '';
+        }
+
+        // ----- images -----
+        async function loadImages() {
+            try {
+                var res = await fetch('/api/images', { cache: 'no-store' });
+                if (!res.ok) return;
+                var data = await res.json();
+                availableImages = (data.images || []).slice().sort();
+            } catch (_) { /* tolerate */ }
+        }
+
+        // ----- rendering -----
+        function computePrice(p) {
+            // Best-effort preview using the hard-coded fallback. Real price
+            // comes from the public site's SilverPriceUpdater post-save.
+            var rateGuess = 235;
+            var price = rateGuess * (Number(p.weight) || 0) + (Number(p.makingCharge) || 0);
+            return Math.round(price).toLocaleString('en-IN');
+        }
+
+        function thumbHtml(product) {
+            var filename = product.image;
+            if (filename && availableImages.indexOf('images/' + filename) !== -1) {
+                return '<img class="thumb" src="images/' + filename + '" alt="">';
+            }
+            return '<div class="thumb empty">no img</div>';
+        }
+
+        function renderAll() {
+            $sections.innerHTML = '';
+            PAGE_SLUGS.forEach(function (slug, i) {
+                var page = draftData.pages[slug];
+                if (!page) return;
+                var det = document.createElement('details');
+                det.className = 'page-section';
+                if (i === 0) det.open = true;
+                var sum = document.createElement('summary');
+                sum.textContent = PAGE_LABELS[slug] + ' (' + page.products.length + ')';
+                det.appendChild(sum);
+
+                var list = document.createElement('div');
+                list.className = 'row-list';
+                var sorted = page.products.slice().sort(function (a, b) { return a.order - b.order; });
+                sorted.forEach(function (p) {
+                    var realIndex = page.products.indexOf(p);
+                    var row = document.createElement('div');
+                    row.className = 'row';
+                    row.innerHTML =
+                        '<div class="order">' + (p.order + 1) + '</div>' +
+                        thumbHtml(p) +
+                        '<div class="meta">' +
+                            '<div class="title">' + escapeHtml(p.title || '(untitled)') + '</div>' +
+                            '<div class="sub">' +
+                                '<span>' + p.weight + ' g</span>' +
+                                '<span>₹' + Number(p.makingCharge).toLocaleString('en-IN') + ' making</span>' +
+                                '<span>~ ₹' + computePrice(p) + '</span>' +
+                                (p.tag ? '<span class="chip">' + escapeHtml(p.tag) + '</span>' : '') +
+                            '</div>' +
+                        '</div>' +
+                        '<button class="edit" data-slug="' + slug + '" data-index="' + realIndex + '">Edit</button>';
+                    list.appendChild(row);
+                });
+                det.appendChild(list);
+                $sections.appendChild(det);
+            });
+
+            // wire edit buttons
+            $sections.querySelectorAll('button.edit').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    openEditor(btn.getAttribute('data-slug'), parseInt(btn.getAttribute('data-index'), 10));
+                });
+            });
+        }
+
+        function escapeHtml(s) {
+            return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+            });
+        }
+
+        function markDirty() {
+            dirty = true;
+            $btnSave.disabled = false;
+            $btnDiscard.disabled = false;
+        }
+
+        // ----- editor -----
+        function openEditor(slug, idx) {
+            editingPage = slug;
+            editingIndex = idx;
+            var p = draftData.pages[slug].products[idx];
+            document.getElementById('edit-title').textContent = PAGE_LABELS[slug] + ' — ' + (p.title || 'Edit');
+            document.getElementById('f-title').value = p.title || '';
+            document.getElementById('f-description').value = p.description || '';
+            document.getElementById('f-weight').value = p.weight;
+            document.getElementById('f-making').value = p.makingCharge;
+            document.getElementById('f-order').value = p.order;
+            document.getElementById('f-tag').value = p.tag || '';
+
+            var sel = document.getElementById('f-image');
+            sel.innerHTML = '';
+            var knownImages = availableImages.slice();
+            if (p.image && knownImages.indexOf('images/' + p.image) === -1) {
+                knownImages.unshift('images/' + p.image); // show stale even if missing
+            }
+            if (knownImages.length === 0) {
+                var opt = document.createElement('option');
+                opt.value = p.image || '';
+                opt.textContent = '(no images available)';
+                sel.appendChild(opt);
+            } else {
+                knownImages.forEach(function (full) {
+                    var opt = document.createElement('option');
+                    opt.value = full.replace(/^images\//, '');
+                    opt.textContent = full;
+                    if (opt.value === p.image) opt.selected = true;
+                    sel.appendChild(opt);
+                });
+            }
+
+            // clear error markers
+            ['title', 'description', 'image', 'weight', 'making', 'order', 'tag'].forEach(function (k) {
+                document.getElementById('err-' + k).textContent = '';
+            });
+
+            $dialog.showModal();
+        }
+
+        function validateEditor(values) {
+            var ok = true;
+            function setErr(k, msg) { document.getElementById('err-' + k).textContent = msg; if (msg) ok = false; }
+            setErr('title', values.title.length === 0 ? 'Required' : (values.title.length > 120 ? 'Max 120 chars' : ''));
+            setErr('description', values.description.length === 0 ? 'Required' : (values.description.length > 500 ? 'Max 500 chars' : ''));
+            setErr('image', values.image ? '' : 'Required');
+            setErr('weight', values.weight > 0 && values.weight <= 5000 ? '' : 'Must be > 0 and ≤ 5000');
+            setErr('making', values.making >= 0 && values.making <= 1_000_000 ? '' : 'Must be 0–1,000,000');
+            setErr('order', Number.isInteger(values.order) && values.order >= 0 && values.order <= 99 ? '' : 'Integer 0–99');
+            setErr('tag', values.tag.length > 32 ? 'Max 32 chars' : '');
+            return ok;
+        }
+
+        document.getElementById('edit-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var values = {
+                title: document.getElementById('f-title').value.trim(),
+                description: document.getElementById('f-description').value.trim(),
+                image: document.getElementById('f-image').value,
+                weight: parseFloat(document.getElementById('f-weight').value),
+                making: parseFloat(document.getElementById('f-making').value),
+                order: parseInt(document.getElementById('f-order').value, 10),
+                tag: document.getElementById('f-tag').value.trim(),
+            };
+            if (!validateEditor(values)) return;
+
+            var p = draftData.pages[editingPage].products[editingIndex];
+            p.title = values.title;
+            p.description = values.description;
+            p.image = values.image;
+            p.weight = values.weight;
+            p.makingCharge = values.making;
+            p.order = values.order;
+            p.tag = values.tag;
+
+            $dialog.close();
+            renderAll();
+            markDirty();
+            toast('Saved locally — click Save at the top to publish.', 'success');
+        });
+
+        document.getElementById('edit-cancel').addEventListener('click', function () { $dialog.close(); });
+        document.getElementById('edit-close').addEventListener('click', function () { $dialog.close(); });
+
+        // ----- top save / discard / sign-out -----
+        $btnSave.addEventListener('click', async function () {
+            if (!dirty) return;
+            var pw = getPw();
+            $btnSave.disabled = true;
+            var origText = $btnSave.innerHTML;
+            $btnSave.innerHTML = '<span class="spinner"></span>Saving…';
+            try {
+                var res = await fetch('/api/products', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-admin-password': pw,
+                    },
+                    body: JSON.stringify({ products: draftData }),
+                });
+                if (res.status === 401) {
+                    clearPw();
+                    toast('Session expired — sign in again.', 'error');
+                    lock();
+                    return;
+                }
+                if (res.status === 409) {
+                    toast('Another admin saved first. Reload to retry.', 'error');
+                    return;
+                }
+                if (!res.ok) {
+                    var errBody = await res.json().catch(function () { return {}; });
+                    toast('Save failed: ' + (errBody.error || ('HTTP ' + res.status)), 'error');
+                    return;
+                }
+                var data = await res.json();
+                serverData = data.products;
+                draftData = JSON.parse(JSON.stringify(serverData));
+                dirty = false;
+                $btnSave.disabled = true;
+                $btnDiscard.disabled = true;
+                renderAll();
+                toast('Published. Live in ~30 s.', 'success');
+            } catch (err) {
+                toast('Network error: ' + err.message, 'error');
+            } finally {
+                $btnSave.innerHTML = origText;
+                $btnSave.disabled = !dirty;
+            }
+        });
+
+        $btnDiscard.addEventListener('click', function () {
+            if (!dirty) return;
+            draftData = JSON.parse(JSON.stringify(serverData));
+            dirty = false;
+            $btnSave.disabled = true;
+            $btnDiscard.disabled = true;
+            renderAll();
+            toast('Discarded unsaved edits.', '');
+        });
+
+        $btnSignout.addEventListener('click', function () {
+            if (dirty && !confirm('You have unsaved changes. Sign out anyway?')) return;
+            lock();
+        });
+
+        $pwBtn.addEventListener('click', function () {
+            var pw = $pw.value;
+            if (!pw) { $pwErr.textContent = 'Enter a password.'; return; }
+            $pwErr.textContent = '';
+            attemptLogin(pw);
+        });
+        $pw.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') $pwBtn.click();
+        });
+
+        // ----- boot -----
+        (async function () {
+            await loadImages();
+            var pw = getPw();
+            if (pw) {
+                var r = await tryLoad(pw);
+                if (r.ok) {
+                    serverData = r.data.products;
+                    draftData = JSON.parse(JSON.stringify(serverData));
+                    unlock();
+                } else {
+                    clearPw();
+                }
+            }
+        })();
+    })();
+    </script>
+</body>
+</html>

@@ -1254,6 +1254,12 @@
                 animation-duration: 18s;
             }
         }
+
+        /* Hide the static base price until hydration + silver-rate calc finishes,
+           so the user never sees the stale hard-coded fallback. */
+        .product-card:not(.hydrated) .product-meta .price {
+            visibility: hidden;
+        }
 </style>
 </head>
 <body>
@@ -1795,6 +1801,8 @@
       window.silverPriceUpdater = new SilverPriceUpdater();
     });
   </script>
+
+  <script src="js/hydrate-products.js" defer></script>
 
 </body>
 </html>

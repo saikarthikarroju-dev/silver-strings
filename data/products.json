@@ -1,0 +1,161 @@
+{
+  "version": 1,
+  "pages": {
+    "home": {
+      "slug": "home",
+      "whatsappPhone": "919391381188",
+      "products": [
+        {
+          "id": "home-1",
+          "order": 1,
+          "title": "Intricate Floral Pendant",
+          "description": "A delicate dance of silver threads and midnight blue, evoking the timeless grace of nature's bloom. An heirloom for the modern muse.",
+          "image": "p1.jpg",
+          "imageAlt": "Pendant",
+          "weight": 12,
+          "makingCharge": 3600,
+          "tag": "Pendant"
+        },
+        {
+          "id": "home-2",
+          "order": 2,
+          "title": "Sovereign Showpiece",
+          "description": "A beacon of nobility. This hand-woven masterpiece captures the architectural grandeur of the Nizam's courts, casting a royal glow upon any space.",
+          "image": "p2.jpg",
+          "imageAlt": "Showpiece",
+          "weight": 85,
+          "makingCharge": 5625,
+          "tag": "Showpiece"
+        },
+        {
+          "id": "home-3",
+          "order": 3,
+          "title": "Filigree Tabletop Art",
+          "description": "A study in precision and poise. This anchor motif symbolizes strength anchored in elegance, weaving a story of nautical heritage in pure silver.",
+          "image": "p3.jpg",
+          "imageAlt": "Tabletop Art",
+          "weight": 15,
+          "makingCharge": 2075,
+          "tag": "Tabletop Art"
+        }
+      ]
+    },
+    "pens": {
+      "slug": "pens",
+      "whatsappPhone": "919391381188",
+      "products": [
+        {
+          "id": "pens-1",
+          "order": 1,
+          "title": "Regal Filigree Pen",
+          "description": "A seamless blend of silver craftsmanship and writing precision. Featuring intricate floral filigree along the barrel.",
+          "image": "pen1.jpg",
+          "imageAlt": "Silver Filigree Pen",
+          "weight": 45,
+          "makingCharge": 4750,
+          "tag": "Pen"
+        },
+        {
+          "id": "pens-2",
+          "order": 2,
+          "title": "Imperial Silver Pen",
+          "description": "Sleek, sophisticated, and timeless. This pen showcases the peak of Karimnagar's silver weaving technique.",
+          "image": "pen2.jpg",
+          "imageAlt": "Silver Filigree Pen",
+          "weight": 60,
+          "makingCharge": 7500,
+          "tag": "Pen"
+        },
+        {
+          "id": "pens-3",
+          "order": 3,
+          "title": "Artisan's Signature Pen",
+          "description": "A tribute to the masters of Tarkasi. Featuring a uniquely woven cap and polished silver body.",
+          "image": "pen3.jpg",
+          "imageAlt": "Silver Filigree Pen",
+          "weight": 38,
+          "makingCharge": 3400,
+          "tag": "Pen"
+        }
+      ]
+    },
+    "frames": {
+      "slug": "frames",
+      "whatsappPhone": "919391381188",
+      "products": [
+        {
+          "id": "frames-1",
+          "order": 1,
+          "title": "Imperial Filigree Frame",
+          "description": "A majestic frame adorned with intricate silver weaves, perfect for capturing the most cherished moments of a lifetime.",
+          "image": "frame1.jpg",
+          "imageAlt": "Silver Filigree Frame",
+          "weight": 120,
+          "makingCharge": 6000,
+          "tag": "Frame"
+        },
+        {
+          "id": "frames-2",
+          "order": 2,
+          "title": "Classic Tarkasi Frame",
+          "description": "Timeless elegance in every curve. This frame showcases the purity of silver filigree in a sophisticated, minimalist design.",
+          "image": "frame2.jpg",
+          "imageAlt": "Silver Filigree Frame",
+          "weight": 80,
+          "makingCharge": 3500,
+          "tag": "Frame"
+        },
+        {
+          "id": "frames-3",
+          "order": 3,
+          "title": "Royal Heritage Frame",
+          "description": "A tribute to royal courts. This heavily detailed frame brings an aura of nobility to any photograph it holds.",
+          "image": "frame3.jpg",
+          "imageAlt": "Silver Filigree Frame",
+          "weight": 200,
+          "makingCharge": 7000,
+          "tag": "Frame"
+        }
+      ]
+    },
+    "stands": {
+      "slug": "stands",
+      "whatsappPhone": "919391381188",
+      "products": [
+        {
+          "id": "stands-1",
+          "order": 1,
+          "title": "Majestic Filigree Stand",
+          "description": "A towering achievement in silver weaving. This stand combines structural grace with intricate floral motifs.",
+          "image": "stand1.jpg",
+          "imageAlt": "Silver Filigree Stand",
+          "weight": 250,
+          "makingCharge": 6250,
+          "tag": "Stand"
+        },
+        {
+          "id": "stands-2",
+          "order": 2,
+          "title": "Sovereign Silver Showpiece",
+          "description": "A beacon of luxury. This handcrafted stand is designed to hold the most precious of items with royal dignity.",
+          "image": "stand2.jpg",
+          "imageAlt": "Silver Filigree Stand",
+          "weight": 180,
+          "makingCharge": 4500,
+          "tag": "Stand"
+        },
+        {
+          "id": "stands-3",
+          "order": 3,
+          "title": "Artisan's Filigree Plinth",
+          "description": "Precision and prestige in every thread. A minimalist yet luxurious stand for the discerning collector.",
+          "image": "stand3.jpg",
+          "imageAlt": "Silver Filigree Stand",
+          "weight": 140,
+          "makingCharge": 3500,
+          "tag": "Stand"
+        }
+      ]
+    }
+  }
+}
