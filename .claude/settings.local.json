@@ -12,7 +12,8 @@
       "Bash(grep -oE \"price of silver.{0,300}\")",
       "Bash(grep -oE \"price of silver in Hyderabad today is.{0,120}\" /tmp/hyd.html)",
       "Bash(node -e ' *)",
-      "Bash(node *)"
+      "Bash(node *)",
+      "Bash(grep -n \"Silkscreen\\\\|price-banner\\\\|silver-price-ticker\\\\|Current Silver Price\\\\|₹\\\\\\\\\\\\${this.silverPricePerGram\" \"C:\\\\Users\\\\UDAYPRABHA\\\\OneDrive\\\\Documents\\\\GitHub\\\\silver-strings\\\\index.html\")"
     ]
   }
 }

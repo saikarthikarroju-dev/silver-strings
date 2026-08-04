@@ -1160,57 +1160,94 @@
             transform: translateY(-8px) rotate(-45deg);
         }
 
-        /* Silver Price Banner — styled to match the "Today's Rate" reference */
+        /* Silver Price Banner — slim dark strip, Silkscreen font, gold accent, scrolls R→L */
         .price-banner {
             width: 100%;
-            background: linear-gradient(135deg, #c9a47a 0%, #b08a5a 100%);
-            color: #ffffff;
-            padding: 14px 20px;
-            text-align: center;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: clamp(0.95rem, 1.8vw, 1.15rem);
-            font-weight: 500;
-            letter-spacing: 0.3px;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(212, 175, 55, 0.25);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+            color: var(--accent-gold);
+            padding: 10px 0;
+            text-align: right;
+            font-family: 'Silkscreen', cursive;
+            font-size: clamp(0.75rem, 1.4vw, 0.95rem);
+            letter-spacing: 2px;
+            text-transform: uppercase;
             position: relative;
             z-index: 998;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            display: flex;
-            justify-content: center;
+            overflow: hidden;            /* clip the scrolling track to the banner */
+            white-space: nowrap;
+        }
+
+        .price-banner .ticker-track {
+            display: inline-flex;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 6px 10px;
+            gap: 60px;                 /* gap between repeated segments */
+            white-space: nowrap;
+            padding-left: 100%;         /* start fully off-screen on the right */
+            animation: tickerScroll 25s linear infinite;
+            will-change: transform;
+        }
+
+        .price-banner .ticker-segment {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;             /* never compress a segment */
+        }
+
+        .price-banner:hover .ticker-track {
+            animation-play-state: paused;
+        }
+
+        @keyframes tickerScroll {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
         }
 
         .price-banner .price-label {
-            font-weight: 400;
+            color: var(--silver);
+            opacity: 0.9;
         }
 
         .price-banner .price-value {
+            color: var(--accent-gold);
             font-weight: 700;
-            margin-left: 4px;
         }
 
         .price-banner .price-refresh {
             font-size: 0.7em;
-            opacity: 0.85;
-            margin-left: 12px;
-            font-weight: 400;
+            color: var(--silver);
+            opacity: 0.55;
+            letter-spacing: 1.5px;
         }
 
         .price-banner.loading .price-value {
-            opacity: 0.6;
+            opacity: 0.5;
         }
 
         .price-banner .price-error {
             display: none;
-            color: #fff5f5;
+            color: #e8a8a8;
             font-size: 0.7em;
-            margin-left: 12px;
-            font-weight: 400;
+            letter-spacing: 1px;
+            font-family: 'Inter', sans-serif;
         }
 
         .price-banner.error .price-error {
             display: inline;
+        }
+
+        /* On small screens, keep it readable but still on one line if possible */
+        @media screen and (max-width: 480px) {
+            .price-banner {
+                letter-spacing: 1.5px;
+            }
+            .price-banner .ticker-track {
+                animation-duration: 18s;
+            }
         }
 </style>
 </head>
@@ -1245,10 +1282,20 @@
 
     <!-- Silver Price Banner -->
     <div class="price-banner loading" id="price-banner" role="status" aria-live="polite">
-        <span class="price-label">Today's Silver Rate :</span>
-        <span class="price-value" id="silver-price-ticker">Loading…</span>
-        <span class="price-refresh" id="price-refresh"></span>
-        <span class="price-error">Live data unavailable — showing last known price.</span>
+        <div class="ticker-track" id="price-ticker-track">
+            <span class="ticker-segment">
+                <span class="price-label">Current Silver Price:</span>
+                <span class="price-value" id="silver-price-ticker">Loading…</span>
+                <span class="price-refresh" id="price-refresh"></span>
+                <span class="price-error">Live data unavailable</span>
+            </span>
+            <span class="ticker-segment" aria-hidden="true">
+                <span class="price-label">Current Silver Price:</span>
+                <span class="price-value" id="silver-price-ticker-clone">Loading…</span>
+                <span class="price-refresh" id="price-refresh-clone"></span>
+                <span class="price-error">Live data unavailable</span>
+            </span>
+        </div>
     </div>
 
     <section class="hero fade-in">
@@ -1689,35 +1736,36 @@
       updateTicker(isError = false, asOf = null) {
         const banner = document.getElementById('price-banner');
         const tickerElement = document.getElementById('silver-price-ticker');
+        const tickerClone = document.getElementById('silver-price-ticker-clone');
         const refreshElement = document.getElementById('price-refresh');
+        const refreshClone = document.getElementById('price-refresh-clone');
         if (!tickerElement || !banner) return;
 
-        const formatted = `Silver Rate ₹${Math.round(this.silverPricePerGram).toLocaleString('en-IN')}/gm`;
+        const formatted = `₹${this.silverPricePerGram.toFixed(2)}/g`;
         tickerElement.textContent = formatted;
+        if (tickerClone) tickerClone.textContent = formatted;
         banner.classList.remove('loading');
         banner.classList.toggle('error', !!isError);
 
-        if (refreshElement) {
-          let label;
-          if (asOf) {
-            // Format the API-provided ISO timestamp as HH:MM (local time)
-            try {
-              const d = new Date(asOf);
-              if (!isNaN(d.getTime())) {
-                const hh = String(d.getHours()).padStart(2, '0');
-                const mm = String(d.getMinutes()).padStart(2, '0');
-                label = `(as of ${hh}:${mm})`;
-              }
-            } catch (_) { /* fall through */ }
-          }
-          if (!label) {
-            const now = new Date();
-            const hh = String(now.getHours()).padStart(2, '0');
-            const mm = String(now.getMinutes()).padStart(2, '0');
-            label = `(updated ${hh}:${mm})`;
-          }
-          refreshElement.textContent = label;
+        let label;
+        if (asOf) {
+          try {
+            const d = new Date(asOf);
+            if (!isNaN(d.getTime())) {
+              const hh = String(d.getHours()).padStart(2, '0');
+              const mm = String(d.getMinutes()).padStart(2, '0');
+              label = `(as of ${hh}:${mm})`;
+            }
+          } catch (_) { /* fall through */ }
         }
+        if (!label) {
+          const now = new Date();
+          const hh = String(now.getHours()).padStart(2, '0');
+          const mm = String(now.getMinutes()).padStart(2, '0');
+          label = `(updated ${hh}:${mm})`;
+        }
+        if (refreshElement) refreshElement.textContent = label;
+        if (refreshClone) refreshClone.textContent = label;
       }
     }
 
