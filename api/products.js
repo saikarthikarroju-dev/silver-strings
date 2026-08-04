@@ -289,13 +289,23 @@ module.exports = async function handler(req, res) {
         if (putRes.status === 409 && attempt === 0) {
           // Concurrent update — drop cached sha and retry once.
           try { fs.unlinkSync(SHA_CACHE_FILE); } catch (_) {}
-          lastErr = '409 conflict';
+          lastErr = '409 conflict — remote changed under us, retrying';
           continue;
         }
         const detail = await putRes.text().catch(() => '');
+        // Try to extract GitHub's human-readable message so the admin toast
+        // can show the actual reason (e.g. "Branch not found", "Resource not
+        // accessible by personal access token").
+        let humanDetail = detail.slice(0, 400);
+        try {
+          const parsed = JSON.parse(detail);
+          if (parsed && parsed.message) humanDetail = parsed.message;
+        } catch (_) { /* not JSON, keep raw */ }
         return fail(res, 502, 'github-write-failed', {
           status: putRes.status,
-          detail: detail.slice(0, 400),
+          detail: humanDetail,
+          repo,
+          branch,
         });
       } catch (err) {
         lastErr = err;
@@ -303,6 +313,8 @@ module.exports = async function handler(req, res) {
     }
     return fail(res, 502, 'github-write-failed', {
       detail: String(lastErr && lastErr.message || lastErr || 'unknown'),
+      repo,
+      branch,
     });
   }
 

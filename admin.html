@@ -761,7 +761,10 @@
                 }
                 if (!res.ok) {
                     var errBody = await res.json().catch(function () { return {}; });
-                    toast('Save failed: ' + (errBody.error || ('HTTP ' + res.status)), 'error');
+                    var msg = errBody.error || ('HTTP ' + res.status);
+                    if (errBody.detail) msg += ' — ' + errBody.detail;
+                    if (errBody.status) msg += ' (' + errBody.status + ')';
+                    toast('Save failed: ' + msg, 'error');
                     return;
                 }
                 var data = await res.json();
